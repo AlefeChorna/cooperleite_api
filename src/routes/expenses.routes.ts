@@ -1,18 +1,18 @@
 import { Router } from 'express';
-import { uuid } from 'uuidv4';
+import ExpensesRepository from '../repositories/ExpensesRepository';
 
 const expensesRouter = Router();
-const expenses = [];
+const expensesRepository = new ExpensesRepository();
+
+expensesRouter.get('/', (request, response) => {
+  const expenses = expensesRepository.all();
+
+  response.json(expenses);
+});
 
 expensesRouter.post('/', (request, response) => {
   const { name, value } = request.body;
-  const expense = {
-    id: uuid(),
-    name,
-    value,
-  };
-
-  expenses.push(expense);
+  const expense = expensesRepository.create({ name, value });
 
   response.json(expense);
 });
