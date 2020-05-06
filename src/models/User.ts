@@ -6,16 +6,19 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 
-@Entity('expenses')
-class Expense {
-  @PrimaryGeneratedColumn('increment')
+@Entity('users')
+class User {
+  @PrimaryGeneratedColumn('uuid')
   id: string;
 
   @Column()
   name: string;
 
-  @Column('decimal')
-  value: number;
+  @Column()
+  email: string;
+
+  @Column()
+  password: string;
 
   @CreateDateColumn()
   created_at: Date;
@@ -24,4 +27,4 @@ class Expense {
   updated_at: Date;
 }
 
-export default Expense;
+export default User;
