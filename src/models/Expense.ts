@@ -1,17 +1,15 @@
-import { uuid } from 'uuidv4';
+import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
+@Entity('expenses')
 class Expense {
+  @PrimaryGeneratedColumn('increment')
   id: string;
 
+  @Column()
   name: string;
 
+  @Column('decimal')
   value: number;
-
-  constructor({ name, value }: Omit<Expense, 'id'>) {
-    this.id = uuid();
-    this.name = name;
-    this.value = value;
-  }
 }
 
 export default Expense;
