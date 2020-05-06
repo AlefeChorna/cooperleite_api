@@ -14,9 +14,13 @@ expensesRouter.get('/', async (request, response) => {
 });
 
 expensesRouter.post('/', async (request, response) => {
-  const { name, value } = request.body;
+  const { name, value, user_id: userId } = request.body;
   const createExpenseService = new CreateExpenseService();
-  const expense = await createExpenseService.execute({ name, value });
+  const expense = await createExpenseService.execute({
+    name,
+    value,
+    userId,
+  });
 
   response.json(expense);
 });
