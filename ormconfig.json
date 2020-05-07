@@ -1,9 +1,9 @@
 {
   "type": "postgres",
-  "host": "206.189.206.24",
-  "port": 15432,
+  "host": "localhost",
+  "port": 5432,
   "username": "postgres",
-  "password": "bZKzyZm;Cq#K+jI1",
+  "password": "admin",
   "database": "coorperleite",
   "entities": [
     "./src/models/*.ts"
