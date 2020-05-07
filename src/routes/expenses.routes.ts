@@ -3,8 +3,11 @@ import { getCustomRepository } from 'typeorm';
 
 import ExpensesRepository from '../repositories/ExpensesRepository';
 import CreateExpenseService from '../services/CreateExpenseService';
+import ensureAuthenticated from '../middlewares/ensureAuthenticated';
 
 const expensesRouter = Router();
+
+expensesRouter.use(ensureAuthenticated);
 
 expensesRouter.get('/', async (request, response) => {
   const expensesRepository = getCustomRepository(ExpensesRepository);
