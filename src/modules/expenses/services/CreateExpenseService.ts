@@ -1,3 +1,5 @@
+import { injectable, inject } from 'tsyringe';
+
 import Expense from '../infra/typeorm/entities/Expense';
 import IExpensesRepository from '../repositories/IExpensesRepository';
 
@@ -7,10 +9,14 @@ interface IRequest {
   user_id: string;
 }
 
+@injectable()
 class CreateExpenseService {
   private expensesRepository: IExpensesRepository;
 
-  constructor(expensesRepository: IExpensesRepository) {
+  constructor(
+    @inject('ExpensesRepository')
+    expensesRepository: IExpensesRepository,
+  ) {
     this.expensesRepository = expensesRepository;
   }
 
