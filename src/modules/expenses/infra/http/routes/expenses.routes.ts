@@ -1,7 +1,6 @@
 import { Router } from 'express';
-import { getCustomRepository } from 'typeorm';
 
-import ExpensesRepository from '@modules/expenses/repositories/ExpensesRepository';
+import ExpensesRepository from '@modules/expenses/infra/typeorm/repositories/ExpensesRepository';
 import CreateExpenseService from '@modules/expenses/services/CreateExpenseService';
 import ensureAuthenticated from '@modules/users/infra/http/middlewares/ensureAuthenticated';
 
@@ -9,20 +8,20 @@ const expensesRouter = Router();
 
 expensesRouter.use(ensureAuthenticated);
 
-expensesRouter.get('/', async (request, response) => {
-  const expensesRepository = getCustomRepository(ExpensesRepository);
-  const expenses = await expensesRepository.find();
+// expensesRouter.get('/', async (request, response) => {
+//   const expenses = await expensesRepository.find();
 
-  response.json(expenses);
-});
+//   response.json(expenses);
+// });
 
 expensesRouter.post('/', async (request, response) => {
-  const { name, value, user_id: userId } = request.body;
-  const createExpenseService = new CreateExpenseService();
+  const { name, value, user_id } = request.body;
+  const expensesRepository = new ExpensesRepository();
+  const createExpenseService = new CreateExpenseService(expensesRepository);
   const expense = await createExpenseService.execute({
     name,
     value,
-    userId,
+    user_id,
   });
 
   response.json(expense);

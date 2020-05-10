@@ -1,20 +1,21 @@
-import { getCustomRepository } from 'typeorm';
-
 import Expense from '../infra/typeorm/entities/Expense';
-import ExpensesRepository from '../repositories/ExpensesRepository';
+import IExpensesRepository from '../repositories/IExpensesRepository';
 
-interface Request {
+interface IRequest {
   name: string;
   value: number;
-  userId: string;
+  user_id: string;
 }
 
 class CreateExpenseService {
-  public async execute({ name, value, userId }: Request): Promise<Expense> {
-    const expensesRepository = getCustomRepository(ExpensesRepository);
-    const expense = expensesRepository.create({ name, value, user_id: userId });
+  private expensesRepository: IExpensesRepository;
 
-    await expensesRepository.save(expense);
+  constructor(expensesRepository: IExpensesRepository) {
+    this.expensesRepository = expensesRepository;
+  }
+
+  public async execute({ name, value, user_id }: IRequest): Promise<Expense> {
+    const expense = this.expensesRepository.create({ name, value, user_id });
 
     return expense;
   }
