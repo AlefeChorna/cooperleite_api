@@ -8,7 +8,7 @@ import {
   JoinColumn,
 } from 'typeorm';
 
-import Expense from './Expense';
+import Expense from '@modules/expenses/infra/typeorm/entities/Expense';
 
 @Entity('users')
 class User {
