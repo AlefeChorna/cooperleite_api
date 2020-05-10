@@ -1,9 +1,9 @@
 import { Router } from 'express';
 import { getCustomRepository } from 'typeorm';
 
-import ExpensesRepository from '../repositories/ExpensesRepository';
-import CreateExpenseService from '../services/CreateExpenseService';
-import ensureAuthenticated from '../middlewares/ensureAuthenticated';
+import ExpensesRepository from '@modules/expenses/repositories/ExpensesRepository';
+import CreateExpenseService from '@modules/expenses/services/CreateExpenseService';
+import ensureAuthenticated from '@modules/users/infra/http/middlewares/ensureAuthenticated';
 
 const expensesRouter = Router();
 

@@ -1,8 +1,8 @@
 import { Router } from 'express';
 
-import expensesRouter from '@models/expenses/infra/http/routes/expenses.routes';
-import usersRouter from '@models/users/infra/http/routes/users.routes';
-import authRouter from '@models/users/infra/http/routes/auth.routes';
+import expensesRouter from '@modules/expenses/infra/http/routes/expenses.routes';
+import usersRouter from '@modules/users/infra/http/routes/users.routes';
+import authRouter from '@modules/users/infra/http/routes/auth.routes';
 
 const routes = Router();
 

@@ -1,6 +1,6 @@
 import { getCustomRepository } from 'typeorm';
 
-import Expense from '../models/Expense';
+import Expense from '../infra/typeorm/entities/Expense';
 import ExpensesRepository from '../repositories/ExpensesRepository';
 
 interface Request {
