@@ -31,12 +31,12 @@ class AuthenticateUserService {
   public async execute({ email, password }: IRequest): Promise<IResponse> {
     const user = await this.usersRepository.findByEmail(email);
     if (!user) {
-      throw new AppError('Email ou senha inválido', 401);
+      throw new AppError('Email ou senha inválido', 422);
     }
 
     const passwordMatched = await compare(password, user.password);
     if (!passwordMatched) {
-      throw new AppError('Email ou senha inválido', 401);
+      throw new AppError('Email ou senha inválido', 422);
     }
 
     const token = sign({}, authConfig.jwt.secret, {
