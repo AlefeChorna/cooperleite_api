@@ -1,4 +1,5 @@
 import MockUsersRepository from '../repositories/mocks/MockUsersRepository';
+import MockHashProvider from '../providers/HashProvider/mocks/MockHashProvider';
 import CreateUserService from './CreateUserService';
 import AppError from '@shared/errors/AppError';
 
@@ -10,7 +11,11 @@ describe('CreateUserService', () => {
       password: '123456'
     };
     const mockUsersRepository = new MockUsersRepository();
-    const createUserService = new CreateUserService(mockUsersRepository);
+    const mockHashProvider = new MockHashProvider();
+    const createUserService = new CreateUserService(
+      mockUsersRepository,
+      mockHashProvider
+    );
     const user = await createUserService.execute(userData);
 
     expect(user).toHaveProperty('id');
@@ -19,14 +24,18 @@ describe('CreateUserService', () => {
     expect(user.email).toBe(userData.email);
   })
 
-  it('should throw a user if user email already exists', async () => {
+  it('should throw an error if user email already exists', async () => {
     const userData = {
       name: 'Juca Bala',
       email: 'juca@gmail.com',
       password: '123456'
     };
     const mockUsersRepository = new MockUsersRepository();
-    const createUserService = new CreateUserService(mockUsersRepository);
+    const mockHashProvider = new MockHashProvider();
+    const createUserService = new CreateUserService(
+      mockUsersRepository,
+      mockHashProvider
+    );
 
     await createUserService.execute(userData)
 
