@@ -47,7 +47,7 @@ describe('AuthenticateUserService', () => {
       mockHashProvider
     );
 
-    expect(
+    await expect(
       authenticateUserService.execute(userData)
     ).rejects.toBeInstanceOf(AppError)
   })
@@ -71,7 +71,7 @@ describe('AuthenticateUserService', () => {
 
     await createUserService.execute(userData);
 
-    expect(
+    await expect(
       authenticateUserService.execute({
         email: userData.email,
         password: 'abcdefg'
