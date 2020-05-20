@@ -1,16 +1,22 @@
+import { injectable, inject } from 'tsyringe';
 import nodemailer, { Transporter } from 'nodemailer';
 
 import IMailProvider from '../models/IMailProvider';
+import ISendMailDTO from '../dtos/ISendMailDTO';
+import IMailTemplateProvider from '../../MailTemplateProvider/models/IMailTemplateProvider';
 
-interface IMessage {
-  to: string;
-  body: string;
-}
-
+@injectable()
 class EtherealMailProvider implements IMailProvider {
   private client: Transporter;
 
-  constructor() {
+  private mailTemplateProvider: IMailTemplateProvider;
+
+  constructor(
+    @inject('MailTemplateProvider')
+    mailTemplateProvider: IMailTemplateProvider
+  ) {
+    this.mailTemplateProvider = mailTemplateProvider;
+
     nodemailer.createTestAccount()
       .then(account => {
         const transporter = nodemailer.createTransport({
@@ -27,12 +33,19 @@ class EtherealMailProvider implements IMailProvider {
       });
   }
 
-  public async send(to: string, body: string): Promise<void> {
+  public async send({ to, from, subject, templateData }: ISendMailDTO): Promise<void> {
+    const htmlTemplate = await this.mailTemplateProvider.parse(templateData);
     const message = {
-      from: 'Equipe Cooperleite <equipe@cooperleite.com.br>',
-      to,
-      subject: 'Recuperação de senha',
-      text: body,
+      from: {
+        name: from?.name || 'Equipe Cooperleite',
+        address: from?.email || 'equipe@cooperleite.com.br',
+      },
+      to: {
+        name: to.name,
+        address: to.email,
+      },
+      subject,
+      html: htmlTemplate,
     };
 
     const info = await this.client.sendMail(message);
