@@ -5,31 +5,34 @@ import UpdateUserAvatarService from './UpdateUserAvatarService';
 import CreateUserService from './CreateUserService';
 import AppError from '@shared/errors/AppError';
 
+let mockUsersRepository: MockUsersRepository;
+let mockStorageProvider: MockStorageProvider;
+let mockHashProvider: MockHashProvider;
+let createUserService: CreateUserService;
+let updateUserAvatarService: UpdateUserAvatarService;
+
 describe('UpdateUserAvatarService', () => {
+  beforeEach(() => {
+    mockUsersRepository = new MockUsersRepository();
+    mockStorageProvider = new MockStorageProvider();
+    mockHashProvider = new MockHashProvider();
+    createUserService = new CreateUserService(
+      mockUsersRepository,
+      mockHashProvider
+    );
+    updateUserAvatarService = new UpdateUserAvatarService(
+      mockUsersRepository,
+      mockStorageProvider
+    );
+  })
+
   it('should be able to update user avatar', async () => {
     const userData = {
       name: 'Juca Bala',
       email: 'juca@gmail.com',
       password: '123456'
     };
-
-    const mockUsersRepository = new MockUsersRepository();
-    const mockStorageProvider = new MockStorageProvider();
-    const mockHashProvider = new MockHashProvider();
-
-    const createUserService = new CreateUserService(
-      mockUsersRepository,
-      mockHashProvider
-    );
-
     const user = await createUserService.execute(userData);
-
-    const updateUserAvatarService = new UpdateUserAvatarService(
-      mockUsersRepository,
-      mockStorageProvider
-    );
-
-
     const updatedUser = await updateUserAvatarService.execute({
       user_id: user.id,
       avatarFilename: 'profile.png'
@@ -39,20 +42,12 @@ describe('UpdateUserAvatarService', () => {
   })
 
   it('should throw an error if user non existing', async () => {
-    const mockUsersRepository = new MockUsersRepository();
-    const mockStorageProvider = new MockStorageProvider();
-
-    const updateUserAvatarService = new UpdateUserAvatarService(
-      mockUsersRepository,
-      mockStorageProvider
-    );
-
     await expect(
       updateUserAvatarService.execute({
         user_id: 'non-existing-user',
         avatarFilename: 'profile.png'
       })
-    ).rejects.toBeInstanceOf(AppError)
+    ).rejects.toBeInstanceOf(AppError);
   })
 
   it('should be able to delete old avatar when updating new one', async () => {
@@ -61,24 +56,8 @@ describe('UpdateUserAvatarService', () => {
       email: 'juca@gmail.com',
       password: '123456'
     };
-
-    const mockUsersRepository = new MockUsersRepository();
-    const mockStorageProvider = new MockStorageProvider();
-    const mockHashProvider = new MockHashProvider();
-
     const deleteFile = jest.spyOn(mockStorageProvider, 'deleteFile');
-
-    const createUserService = new CreateUserService(
-      mockUsersRepository,
-      mockHashProvider
-    );
-
     const user = await createUserService.execute(userData);
-
-    const updateUserAvatarService = new UpdateUserAvatarService(
-      mockUsersRepository,
-      mockStorageProvider
-    );
 
     await updateUserAvatarService.execute({
       user_id: user.id,

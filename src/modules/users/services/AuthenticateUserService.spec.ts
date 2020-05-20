@@ -5,23 +5,31 @@ import CreateUserService from './CreateUserService';
 import User from '../infra/typeorm/entities/User';
 import AppError from '@shared/errors/AppError';
 
+let mockUsersRepository: MockUsersRepository;
+let mockHashProvider: MockHashProvider;
+let createUserService: CreateUserService;
+let authenticateUserService: AuthenticateUserService;
+
 describe('AuthenticateUserService', () => {
+  beforeEach(() => {
+    mockUsersRepository = new MockUsersRepository();
+    mockHashProvider = new MockHashProvider();
+    createUserService = new CreateUserService(
+      mockUsersRepository,
+      mockHashProvider
+    );
+    authenticateUserService = new AuthenticateUserService(
+      mockUsersRepository,
+      mockHashProvider
+    );
+  })
+
   it('should be able to aythenticate', async () => {
     const userData = {
       name: 'Juca Bala',
       email: 'juca@gmail.com',
       password: '123456'
     };
-    const mockUsersRepository = new MockUsersRepository();
-    const mockHashProvider = new MockHashProvider();
-    const createUserService = new CreateUserService(
-      mockUsersRepository,
-      mockHashProvider
-    );
-    const authenticateUserService = new AuthenticateUserService(
-      mockUsersRepository,
-      mockHashProvider
-    );
 
     await createUserService.execute(userData);
 
@@ -40,12 +48,6 @@ describe('AuthenticateUserService', () => {
       email: 'juca@gmail.com',
       password: '123456'
     };
-    const mockUsersRepository = new MockUsersRepository();
-    const mockHashProvider = new MockHashProvider();
-    const authenticateUserService = new AuthenticateUserService(
-      mockUsersRepository,
-      mockHashProvider
-    );
 
     await expect(
       authenticateUserService.execute(userData)
@@ -58,16 +60,6 @@ describe('AuthenticateUserService', () => {
       email: 'juca@gmail.com',
       password: '123456'
     };
-    const mockUsersRepository = new MockUsersRepository();
-    const mockHashProvider = new MockHashProvider();
-    const createUserService = new CreateUserService(
-      mockUsersRepository,
-      mockHashProvider
-    );
-    const authenticateUserService = new AuthenticateUserService(
-      mockUsersRepository,
-      mockHashProvider
-    );
 
     await createUserService.execute(userData);
 

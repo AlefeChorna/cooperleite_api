@@ -3,19 +3,26 @@ import MockHashProvider from '../providers/HashProvider/mocks/MockHashProvider';
 import CreateUserService from './CreateUserService';
 import AppError from '@shared/errors/AppError';
 
+let mockUsersRepository: MockUsersRepository;
+let mockHashProvider: MockHashProvider;
+let createUserService: CreateUserService;
+
 describe('CreateUserService', () => {
+  beforeEach(() => {
+    mockUsersRepository = new MockUsersRepository();
+    mockHashProvider = new MockHashProvider();
+    createUserService = new CreateUserService(
+      mockUsersRepository,
+      mockHashProvider
+    );
+  })
+
   it('should be able to create a new user', async () => {
     const userData = {
       name: 'Juca Bala',
       email: 'juca@gmail.com',
       password: '123456'
     };
-    const mockUsersRepository = new MockUsersRepository();
-    const mockHashProvider = new MockHashProvider();
-    const createUserService = new CreateUserService(
-      mockUsersRepository,
-      mockHashProvider
-    );
     const user = await createUserService.execute(userData);
 
     expect(user).toHaveProperty('id');
@@ -30,12 +37,6 @@ describe('CreateUserService', () => {
       email: 'juca@gmail.com',
       password: '123456'
     };
-    const mockUsersRepository = new MockUsersRepository();
-    const mockHashProvider = new MockHashProvider();
-    const createUserService = new CreateUserService(
-      mockUsersRepository,
-      mockHashProvider
-    );
 
     await createUserService.execute(userData)
 
