@@ -1,11 +1,11 @@
 import { injectable, inject } from 'tsyringe';
-import { compare } from 'bcryptjs';
 import { sign } from 'jsonwebtoken';
 
 import authConfig from '@config/auth';
 import AppError from '@shared/errors/AppError';
 import User from '../infra/typeorm/entities/User';
 import IUsersRepository from '../repositories/IUsersRepository';
+import IHashProvider from '../providers/HashProvider/models/IHashProvider';
 
 interface IRequest {
   email: string;
@@ -21,11 +21,17 @@ interface IResponse {
 class AuthenticateUserService {
   private usersRepository: IUsersRepository;
 
+  private hashProvider: IHashProvider;
+
   constructor(
     @inject('UsersRepository')
     usersRepository: IUsersRepository,
+
+    @inject('HashProvider')
+    hashProvider: IHashProvider,
   ) {
     this.usersRepository = usersRepository;
+    this.hashProvider = hashProvider;
   }
 
   public async execute({ email, password }: IRequest): Promise<IResponse> {
@@ -34,7 +40,7 @@ class AuthenticateUserService {
       throw new AppError('Email ou senha inválido', 422);
     }
 
-    const passwordMatched = await compare(password, user.password);
+    const passwordMatched = await this.hashProvider.compare(password, user.password);
     if (!passwordMatched) {
       throw new AppError('Email ou senha inválido', 422);
     }
