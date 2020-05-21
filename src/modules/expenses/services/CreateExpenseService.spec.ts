@@ -1,4 +1,5 @@
 import MockExpensesRepository from '../repositories/mocks/MockExpensesRepository';
+import MockNotificationsRepository from '@modules/notifications/repositories/mocks/MockNotificationsRepository';
 import CreateExpenseService from './CreateExpenseService';
 
 describe('CreateExpenseService', () => {
@@ -9,7 +10,11 @@ describe('CreateExpenseService', () => {
       user_id: '1234-asdf-134-asdf'
     };
     const mockExpensesRepository = new MockExpensesRepository();
-    const createExpenseService = new CreateExpenseService(mockExpensesRepository);
+    const mockNotificationsRepository = new MockNotificationsRepository();
+    const createExpenseService = new CreateExpenseService(
+      mockExpensesRepository,
+      mockNotificationsRepository
+    );
 
     const expense = await createExpenseService.execute(expenseData);
 
