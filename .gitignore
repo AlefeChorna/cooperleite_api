@@ -5,3 +5,5 @@ temp/
 coverage/
 
 tmp/*
+.env
+ormconfig.json
