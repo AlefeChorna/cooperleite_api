@@ -7,6 +7,7 @@ import {
   OneToMany,
   JoinColumn,
 } from 'typeorm';
+import { Exclude, Expose } from 'class-transformer';
 
 import Expense from '@modules/expenses/infra/typeorm/entities/Expense';
 
@@ -22,6 +23,7 @@ class User {
   email: string;
 
   @Column()
+  @Exclude()
   password: string;
 
   @Column()
@@ -36,6 +38,13 @@ class User {
   @OneToMany(() => Expense, (expense) => expense.user)
   @JoinColumn({ name: 'id' })
   expenses: Expense[];
+
+  @Expose({ name: 'avatar_url' })
+  getAvatarUrl(): string {
+    return this.avatar
+      ? `${process.env.APP_API_URL}/files/${this.avatar}`
+      : this.avatar;
+  }
 }
 
 export default User;
