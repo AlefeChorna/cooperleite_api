@@ -37,6 +37,7 @@ class UpdateProfileService {
     old_password,
     new_password
   }: IRequest): Promise<User> {
+    console.log('user >>>>>> aqui >>')
     const user = await this.usersRepository.findById(user_id);
 
     if (!user) {
