@@ -1,3 +1,5 @@
+import 'dotenv/config';
+
 import MockUsersRepository from '../repositories/mocks/MockUsersRepository';
 import MockHashProvider from '../providers/HashProvider/mocks/MockHashProvider';
 import AuthenticateUserService from './AuthenticateUserService';
@@ -24,7 +26,7 @@ describe('AuthenticateUserService', () => {
     );
   })
 
-  it('should be able to aythenticate', async () => {
+  it('should be able to authenticate', async () => {
     const userData = {
       name: 'Juca Bala',
       email: 'juca@gmail.com',
