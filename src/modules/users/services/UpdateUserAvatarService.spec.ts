@@ -1,6 +1,7 @@
 import MockUsersRepository from '../repositories/mocks/MockUsersRepository';
 import MockStorageProvider from '@shared/container/providers/StorageProvider/mocks/MockStorageProvider';
 import MockHashProvider from '../providers/HashProvider/mocks/MockHashProvider';
+import MockCacheProvider from '@shared/container/providers/CacheProvider/mocks/MockCacheProvider';
 import UpdateUserAvatarService from './UpdateUserAvatarService';
 import CreateUserService from './CreateUserService';
 import AppError from '@shared/errors/AppError';
@@ -8,6 +9,7 @@ import AppError from '@shared/errors/AppError';
 let mockUsersRepository: MockUsersRepository;
 let mockStorageProvider: MockStorageProvider;
 let mockHashProvider: MockHashProvider;
+let mockCacheProvider: MockCacheProvider;
 let createUserService: CreateUserService;
 let updateUserAvatarService: UpdateUserAvatarService;
 
@@ -16,13 +18,15 @@ describe('UpdateUserAvatarService', () => {
     mockUsersRepository = new MockUsersRepository();
     mockStorageProvider = new MockStorageProvider();
     mockHashProvider = new MockHashProvider();
+    mockCacheProvider = new MockCacheProvider();
     createUserService = new CreateUserService(
       mockUsersRepository,
       mockHashProvider
     );
     updateUserAvatarService = new UpdateUserAvatarService(
       mockUsersRepository,
-      mockStorageProvider
+      mockStorageProvider,
+      mockCacheProvider,
     );
   })
 

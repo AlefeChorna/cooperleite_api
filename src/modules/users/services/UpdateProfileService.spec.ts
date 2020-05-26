@@ -1,19 +1,23 @@
 import MockUsersRepository from '../repositories/mocks/MockUsersRepository';
 import MockHashProvider from '../providers/HashProvider/mocks/MockHashProvider';
+import MockCacheProvider from '@shared/container/providers/CacheProvider/mocks/MockCacheProvider';
 import UpdateProfileService from './UpdateProfileService';
 import AppError from '@shared/errors/AppError';
 
 let mockUsersRepository: MockUsersRepository;
 let mockHashProvider: MockHashProvider;
+let mockCacheProvider: MockCacheProvider;
 let updateProfileService: UpdateProfileService;
 
 describe('UpdateProfileService', () => {
   beforeEach(() => {
     mockUsersRepository = new MockUsersRepository();
     mockHashProvider = new MockHashProvider();
+    mockCacheProvider = new MockCacheProvider();
     updateProfileService = new UpdateProfileService(
       mockUsersRepository,
-      mockHashProvider
+      mockHashProvider,
+      mockCacheProvider,
     );
   })
 

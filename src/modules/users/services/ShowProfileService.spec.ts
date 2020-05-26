@@ -1,17 +1,23 @@
 import MockUsersRepository from '../repositories/mocks/MockUsersRepository';
 import MockHashProvider from '../providers/HashProvider/mocks/MockHashProvider';
+import MockCacheProvider from '@shared/container/providers/CacheProvider/mocks/MockCacheProvider';
 import ShowProfileService from './ShowProfileService';
 import AppError from '@shared/errors/AppError';
 
 let mockUsersRepository: MockUsersRepository;
 let mockHashProvider: MockHashProvider;
+let mockCacheProvider: MockCacheProvider;
 let showProfileService: ShowProfileService;
 
 describe('UpdateProfileService', () => {
   beforeEach(() => {
     mockUsersRepository = new MockUsersRepository();
     mockHashProvider = new MockHashProvider();
-    showProfileService = new ShowProfileService(mockUsersRepository);
+    mockCacheProvider = new MockCacheProvider();
+    showProfileService = new ShowProfileService(
+      mockUsersRepository,
+      mockCacheProvider,
+    );
   })
 
   it('should not be able to show user if user doesn\'t exists', async () => {

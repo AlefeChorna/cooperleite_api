@@ -4,6 +4,7 @@ import AppError from '@shared/errors/AppError';
 import User from '../infra/typeorm/entities/User';
 import IUsersRepository from '../repositories/IUsersRepository';
 import IHashProvider from '../providers/HashProvider/models/IHashProvider';
+import ICacheProvider from '@shared/container/providers/CacheProvider/models/ICacheProvider';
 
 interface IRequest {
   user_id: string;
@@ -19,15 +20,21 @@ class UpdateProfileService {
 
   private hashProvider: IHashProvider;
 
+  private cacheProvider: ICacheProvider;
+
   constructor(
     @inject('UsersRepository')
     usersRepository: IUsersRepository,
 
     @inject('HashProvider')
     hashProvider: IHashProvider,
+
+    @inject('CacheProvider')
+    cacheProvider: ICacheProvider,
   ) {
     this.usersRepository = usersRepository;
     this.hashProvider = hashProvider;
+    this.cacheProvider = cacheProvider;
   }
 
   public async execute({
@@ -77,6 +84,8 @@ class UpdateProfileService {
     Object.assign(user, { name, email });
 
     const updatedUser = this.usersRepository.save(user);
+
+    await this.cacheProvider.delete(`profile-show:${user_id}`);
 
     return updatedUser;
   }

@@ -12,6 +12,12 @@ docker run --name mongodb -p 27017:27017 -d -t mongo
 // start mongo
 docker start mongodb
 
+// if you don't have redis installed, type the next command to install with docker:
+docker run --name redis -p 6379:6379 -d -t redis:alpine
+
+// start mongo
+docker start redis
+
 // finally, start server
 yarn dev:server
 ```
