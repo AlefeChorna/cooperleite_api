@@ -10,6 +10,7 @@ import {
 import { Exclude, Expose } from 'class-transformer';
 
 import Expense from '@modules/expenses/infra/typeorm/entities/Expense';
+import uploadConfig from '@config/upload';
 
 @Entity('users')
 class User {
@@ -40,10 +41,19 @@ class User {
   expenses: Expense[];
 
   @Expose({ name: 'avatar_url' })
-  getAvatarUrl(): string {
-    return this.avatar
-      ? `${process.env.APP_API_URL}/files/${this.avatar}`
-      : this.avatar;
+  getAvatarUrl(): string | null {
+    if (!this.avatar) return null;
+
+    const { config } = uploadConfig;
+
+    switch(uploadConfig.drive) {
+      case 'disk':
+        return `${process.env.APP_API_URL}/files/${this.avatar}`;
+      case 'amazon_s3':
+        return `https://${config.aws.bucket}.s3.amazonaws.com/${this.avatar}`;
+      default:
+        return null;
+    }
   }
 }
 

@@ -9,7 +9,7 @@ import ProfileController from '../controllers/ProfileController';
 import UserAvatarController from '../controllers/UserAvatarController';
 
 const profileRouter = Router();
-const upload = multer(uploadConfig);
+const upload = multer(uploadConfig.config.multer);
 const profileController = new ProfileController();
 const userAvatarController = new UserAvatarController();
 
