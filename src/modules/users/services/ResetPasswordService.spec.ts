@@ -87,4 +87,26 @@ describe('ResetPasswordService', () => {
       })
     ).rejects.toBeInstanceOf(AppError);
   });
+
+  it('should not be able to reset password if token has already been used', async () => {
+    const user = await mockUsersRepository.create({
+      name: 'Juca Bala',
+      email: 'juca@gmail.com',
+      password: '123456'
+    });
+
+    const userToken = await mockUserTokensRepository.generate(user.id);
+
+    await mockUserTokensRepository.save({
+      ...userToken,
+      last_token: userToken.token,
+    });
+
+    await expect(
+      resetPasswordService.execute({
+        token: userToken.token,
+        password: 'abc123'
+      })
+    ).rejects.toBeInstanceOf(AppError);
+  });
 })

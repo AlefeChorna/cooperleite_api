@@ -2,7 +2,6 @@ import { injectable, inject } from 'tsyringe';
 import { differenceInHours } from 'date-fns';
 
 import AppError from '@shared/errors/AppError';
-import User from '../infra/typeorm/entities/User';
 import IUsersRepository from '../repositories/IUsersRepository';
 import IUserTokensRepository from '../repositories/IUserTokensRepository';
 import IHashProvider from '../providers/HashProvider/models/IHashProvider';
@@ -37,28 +36,35 @@ class ResetPasswordService {
 
   public async execute({ token, password }: IRequest): Promise<void> {
     const userToken = await this.userTokensRepository.findByToken(token);
-
     if (!userToken) {
       throw new AppError('User token does not exists', 422);
     }
 
-    const user = await this.usersRepository.findById(userToken.user_id);
+    const tokenAlreadyUsed = userToken.last_token === token;
+    if (tokenAlreadyUsed) {
+      throw new AppError('Token has already been used', 422);
+    }
 
+    const user = await this.usersRepository.findById(userToken.user_id);
     if (!user) {
       throw new AppError('User does not exists', 422);
     }
 
     const tokenCreatedAt = userToken.created_at;
     const tokenHasExpired = differenceInHours(Date.now(), tokenCreatedAt) >= 2;
-
     if (tokenHasExpired) {
       throw new AppError('Token expired');
     }
 
     Object.assign(user, {
-      password: await this.hashProvider.generate(password)
+      password: await this.hashProvider.generate(password),
     });
 
+    Object.assign(userToken, {
+      last_token: token,
+    });
+
+    await this.userTokensRepository.save(userToken);
     await this.usersRepository.save(user);
   }
 }

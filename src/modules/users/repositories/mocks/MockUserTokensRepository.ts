@@ -22,6 +22,14 @@ class MockUserTokensRepository implements IUserTokensRepository {
     return userToken;
   }
 
+  public async save(userToken: UserToken): Promise<UserToken> {
+    const userIndex = this.ormRepository.findIndex(user => user.id === userToken.id);
+
+    this.ormRepository[userIndex] = userToken;
+
+    return userToken;
+  }
+
   public async findByToken(token: string): Promise<UserToken | undefined> {
     const userToken = this.ormRepository.find(
       userToken => userToken.token === token
