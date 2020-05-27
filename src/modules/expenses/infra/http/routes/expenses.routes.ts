@@ -15,7 +15,7 @@ expensesRouter.post(
     [Segments.BODY]: {
       name: Joi.string().required(),
       value: Joi.number().required(),
-      user_id: Joi.string().uuid().required(),
+      company_id: Joi.string().uuid().required(),
     }
   }),
   expensesController.create

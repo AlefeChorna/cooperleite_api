@@ -32,6 +32,11 @@ export default class CreateUsers1588780922415 implements MigrationInterface {
             isNullable: true,
           },
           {
+            name: 'company_id',
+            type: 'uuid',
+            isNullable: true,
+          },
+          {
             name: 'created_at',
             type: 'timestamp',
             default: 'now()',

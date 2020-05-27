@@ -42,6 +42,12 @@ class CreateUserService {
       password: hashedPassword,
     });
 
+    Object.assign(user, {
+      company_id: user.id,
+    });
+
+    await this.usersRepository.save(user);
+
     return user;
   }
 }

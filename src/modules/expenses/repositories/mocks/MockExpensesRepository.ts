@@ -10,7 +10,7 @@ class MockExpensesRepository implements IExpensesRepository {
   public async create({
     name,
     value,
-    user_id,
+    company_id,
   }: ICreateExpenseDTO): Promise<Expense> {
     const expense = new Expense();
 
@@ -18,7 +18,7 @@ class MockExpensesRepository implements IExpensesRepository {
       id: uuid(),
       name,
       value,
-      user_id
+      company_id
     });
 
     this.expensesRepository.push(expense);

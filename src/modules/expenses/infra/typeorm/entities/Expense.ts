@@ -22,7 +22,7 @@ class Expense {
   value: number;
 
   @Column()
-  user_id: string;
+  company_id: string;
 
   @CreateDateColumn()
   created_at: Date;
@@ -31,7 +31,7 @@ class Expense {
   updated_at: Date;
 
   @ManyToOne(() => User)
-  @JoinColumn({ name: 'user_id' })
+  @JoinColumn({ name: 'company_id' })
   user: User;
 }
 

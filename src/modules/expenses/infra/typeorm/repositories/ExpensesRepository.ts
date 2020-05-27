@@ -14,9 +14,9 @@ class ExpensesRepository implements IExpensesRepository {
   public async create({
     name,
     value,
-    user_id,
+    company_id,
   }: ICreateExpenseDTO): Promise<Expense> {
-    const expense = this.ormRepository.create({ name, value, user_id });
+    const expense = this.ormRepository.create({ name, value, company_id });
 
     await this.ormRepository.save(expense);
 

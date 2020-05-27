@@ -7,7 +7,7 @@ import INotificationsRepository from '@modules/notifications/repositories/INotif
 interface IRequest {
   name: string;
   value: number;
-  user_id: string;
+  company_id: string;
 }
 
 @injectable()
@@ -27,11 +27,11 @@ class CreateExpenseService {
     this.notificationsRepository = notificationsRepository;
   }
 
-  public async execute({ name, value, user_id }: IRequest): Promise<Expense> {
-    const expense = this.expensesRepository.create({ name, value, user_id });
+  public async execute({ name, value, company_id }: IRequest): Promise<Expense> {
+    const expense = this.expensesRepository.create({ name, value, company_id });
 
     await this.notificationsRepository.create({
-      recipient_id: user_id,
+      recipient_id: company_id,
       content: 'Nova despesa criada com sucesso!',
     })
 

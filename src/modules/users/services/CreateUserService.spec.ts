@@ -44,4 +44,16 @@ describe('CreateUserService', () => {
       createUserService.execute(userData)
     ).rejects.toBeInstanceOf(AppError)
   })
+
+  it('ensure user id is equal user company id', async () => {
+    const userData = {
+      name: 'Juca Bala',
+      email: 'juca@gmail.com',
+      password: '123456'
+    };
+
+    const user = await createUserService.execute(userData)
+
+    expect(user.company_id).toEqual(user.id);
+  })
 })

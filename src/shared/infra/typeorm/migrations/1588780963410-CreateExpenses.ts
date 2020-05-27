@@ -27,7 +27,7 @@ export default class CreateExpenses1588780963410 implements MigrationInterface {
             type: 'decimal',
           },
           {
-            name: 'user_id',
+            name: 'company_id',
             type: 'uuid',
           },
           {
@@ -48,7 +48,7 @@ export default class CreateExpenses1588780963410 implements MigrationInterface {
       'expenses',
       new TableForeignKey({
         name: 'fk_expenses_to_users',
-        columnNames: ['user_id'],
+        columnNames: ['company_id'],
         referencedTableName: 'users',
         referencedColumnNames: ['id'],
         onDelete: 'RESTRICT',

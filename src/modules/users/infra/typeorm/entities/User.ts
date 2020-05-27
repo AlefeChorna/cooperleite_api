@@ -6,6 +6,7 @@ import {
   UpdateDateColumn,
   OneToMany,
   JoinColumn,
+  Generated,
 } from 'typeorm';
 import { Exclude, Expose } from 'class-transformer';
 
@@ -29,6 +30,10 @@ class User {
 
   @Column()
   avatar: string;
+
+  @Column()
+  @Generated('uuid')
+  company_id: string;
 
   @CreateDateColumn()
   created_at: Date;

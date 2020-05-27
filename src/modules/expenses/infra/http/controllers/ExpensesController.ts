@@ -5,12 +5,12 @@ import CreateExpenseService from '@modules/expenses/services/CreateExpenseServic
 
 export default class ExpensesController {
   public async create(request: Request, response: Response): Promise<Response> {
-    const { name, value, user_id } = request.body;
+    const { name, value, company_id } = request.body;
     const createExpenseService = container.resolve(CreateExpenseService);
     const expense = await createExpenseService.execute({
       name,
       value,
-      user_id,
+      company_id,
     });
 
     return response.json(expense);

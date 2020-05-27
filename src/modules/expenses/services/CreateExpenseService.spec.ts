@@ -7,7 +7,7 @@ describe('CreateExpenseService', () => {
     const expenseData = {
       name: 'Gasoline',
       value: 50,
-      user_id: '1234-asdf-134-asdf'
+      company_id: '1234-asdf-134-asdf'
     };
     const mockExpensesRepository = new MockExpensesRepository();
     const mockNotificationsRepository = new MockNotificationsRepository();
@@ -21,6 +21,6 @@ describe('CreateExpenseService', () => {
     expect(expense).toHaveProperty('id');
     expect(expense.name).toBe(expenseData.name);
     expect(expense.value).toBe(expenseData.value);
-    expect(expense.user_id).toBe(expenseData.user_id);
+    expect(expense.company_id).toBe(expenseData.company_id);
   })
 })
