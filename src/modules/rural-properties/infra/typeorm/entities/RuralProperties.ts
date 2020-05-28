@@ -11,8 +11,8 @@ import IRuralPropertyModel from '@modules/rural-properties/models/IRuralProperty
 
 @Entity('rural_properties')
 class RuralProperties implements IRuralPropertyModel {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
+  @PrimaryGeneratedColumn('increment')
+  id: number;
 
   @Column()
   name: string;

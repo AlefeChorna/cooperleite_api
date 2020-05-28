@@ -13,7 +13,7 @@ import User from '@modules/users/infra/typeorm/entities/User';
 @Entity('expenses')
 class Expense {
   @PrimaryGeneratedColumn('increment')
-  id: string;
+  id: number;
 
   @Column()
   name: string;

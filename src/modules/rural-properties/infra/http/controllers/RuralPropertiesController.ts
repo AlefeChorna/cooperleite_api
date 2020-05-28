@@ -3,6 +3,7 @@ import { container } from 'tsyringe';
 import { classToClass } from 'class-transformer';
 
 import CreateRuralPropertyService from '@modules/rural-properties/services/CreateRuralPropertyService';
+import UpdateRuralPropertyService from '@modules/rural-properties/services/UpdateRuralPropertyService';
 
 export default class RuralPropertiesController {
   public async create(request: Request, response: Response): Promise<Response> {
@@ -17,5 +18,19 @@ export default class RuralPropertiesController {
     });
 
     return response.json({ ...classToClass(ruralProperty) });
+  }
+
+  public async update(request: Request, response: Response): Promise<Response> {
+    const { id, name, city, state, operator_id } = request.body;
+    const updateRuralPropertyService = container.resolve(UpdateRuralPropertyService);
+    const updatedRuralProperty = await updateRuralPropertyService.execute({
+      id,
+      name,
+      city,
+      state,
+      operator_id,
+    });
+
+    return response.json({ ...classToClass(updatedRuralProperty) });
   }
 }

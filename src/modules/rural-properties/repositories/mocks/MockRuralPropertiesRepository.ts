@@ -1,5 +1,3 @@
-import { uuid } from 'uuidv4';
-
 import IRuralPropertiesRepository from '../IRuralPropertiesRepository';
 import IRuralPropertyModel from '../../models/IRuralPropertyModel';
 import ICreateRuralProperty from '../../dtos/ICreateRuralProperty';
@@ -8,7 +6,7 @@ import RuralProperties from '../../infra/typeorm/entities/RuralProperties';
 class MockRuralPropertiesRepository implements IRuralPropertiesRepository {
   private ormRepository: IRuralPropertyModel[] = [];
 
-  public async findById(id: string): Promise<IRuralPropertyModel | undefined> {
+  public async findById(id: number): Promise<IRuralPropertyModel | undefined> {
     const ruralProperty = this.ormRepository.find(
       ruralProperty => ruralProperty.id === id
     );
@@ -20,7 +18,7 @@ class MockRuralPropertiesRepository implements IRuralPropertiesRepository {
     const ruralProperty = new RuralProperties();
 
     Object.assign(ruralProperty, {
-      id: uuid(),
+      id: Date.now(),
       ...data,
     });
 

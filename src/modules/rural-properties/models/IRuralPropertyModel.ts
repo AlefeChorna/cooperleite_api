@@ -1,5 +1,5 @@
 export default interface IRuralPropertyModel {
-  id: string;
+  id: number;
   name: string;
   city: string;
   state: string;
