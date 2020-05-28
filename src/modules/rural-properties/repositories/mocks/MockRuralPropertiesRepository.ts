@@ -14,6 +14,16 @@ class MockRuralPropertiesRepository implements IRuralPropertiesRepository {
     return ruralProperty;
   }
 
+  public async findByCompanyId(
+    company_id: string
+  ): Promise<IRuralPropertyModel[] | undefined> {
+    const ruralProperties = this.ormRepository.filter(
+      ruralProperty => ruralProperty.company_id === company_id
+    );
+
+    return ruralProperties;
+  }
+
   public async create(data: ICreateRuralProperty): Promise<IRuralPropertyModel> {
     const ruralProperty = new RuralProperties();
 

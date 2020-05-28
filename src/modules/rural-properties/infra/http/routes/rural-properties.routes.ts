@@ -9,6 +9,12 @@ const ruralPropertiesController = new RuralPropertiesController();
 
 ruralPropertiesRouter.use(ensureAuthenticated);
 
+ruralPropertiesRouter.get(
+  '/',
+  ensureAuthenticated,
+  ruralPropertiesController.index,
+);
+
 ruralPropertiesRouter.post(
   '/',
   ensureAuthenticated,

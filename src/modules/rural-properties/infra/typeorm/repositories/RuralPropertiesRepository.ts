@@ -12,10 +12,18 @@ class RuralPropertiesRepository implements IRuralPropertiesRepository {
     this.ormRepository = getRepository(RuralProperties);
   }
 
-  public async findById(id: string): Promise<IRuralPropertyModel | undefined> {
+  public async findById(id: number): Promise<IRuralPropertyModel | undefined> {
     const ruralProperty = await this.ormRepository.findOne(id);
 
     return ruralProperty;
+  }
+
+  public async findByCompanyId(
+    company_id: string
+  ): Promise<IRuralPropertyModel[] | undefined> {
+    const ruralProperties = await this.ormRepository.find({ company_id });
+
+    return ruralProperties;
   }
 
   public async create(data: ICreateRuralProperty): Promise<IRuralPropertyModel> {
