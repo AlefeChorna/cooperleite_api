@@ -15,6 +15,17 @@ ruralPropertiesRouter.get(
   ruralPropertiesController.index,
 );
 
+ruralPropertiesRouter.get(
+  '/:id',
+  ensureAuthenticated,
+  celebrate({
+    [Segments.PARAMS]: {
+      id: Joi.number().required(),
+    }
+  }),
+  ruralPropertiesController.show,
+);
+
 ruralPropertiesRouter.post(
   '/',
   ensureAuthenticated,

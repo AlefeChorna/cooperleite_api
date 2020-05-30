@@ -27,8 +27,8 @@ class ShowProfileService {
   }
 
   public async execute({ user_id }: IRequest): Promise<User> {
-    const profileCacheProfileKey = `profile-show:${user_id}`;
-    let user = await this.cacheProvider.recover<User>(profileCacheProfileKey);
+    const profileCacheKey = `profile-show:${user_id}`;
+    let user = await this.cacheProvider.recover<User>(profileCacheKey);
 
     if (!user) {
       user = await this.usersRepository.findById(user_id);
@@ -38,7 +38,7 @@ class ShowProfileService {
       }
 
       await this.cacheProvider.save(
-        profileCacheProfileKey,
+        profileCacheKey,
         user
       );
     }

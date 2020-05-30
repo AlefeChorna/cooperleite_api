@@ -6,6 +6,26 @@ import RuralProperties from '../../infra/typeorm/entities/RuralProperties';
 class MockRuralPropertiesRepository implements IRuralPropertiesRepository {
   private ormRepository: IRuralPropertyModel[] = [];
 
+  public async findOne(ruralPropertyData: IRuralPropertyModel): Promise<IRuralPropertyModel | undefined> {
+    const ruralProperty = this.ormRepository.find((ruralProperty) => {
+      let match = true;
+
+      for (const key in ruralPropertyData) {
+        // @ts-ignore
+        if (ruralPropertyData[key] !== ruralProperty[key]) {
+          match = false;
+          break;
+        }
+      }
+
+      return match;
+    });
+
+    if (!ruralProperty) return undefined;
+
+    return ruralProperty;
+  }
+
   public async findById(id: number): Promise<IRuralPropertyModel | undefined> {
     const ruralProperty = this.ormRepository.find(
       ruralProperty => ruralProperty.id === id
@@ -24,12 +44,12 @@ class MockRuralPropertiesRepository implements IRuralPropertiesRepository {
     return ruralProperties;
   }
 
-  public async create(data: ICreateRuralProperty): Promise<IRuralPropertyModel> {
+  public async create(ruralPropertyData: ICreateRuralProperty): Promise<IRuralPropertyModel> {
     const ruralProperty = new RuralProperties();
 
     Object.assign(ruralProperty, {
       id: Date.now(),
-      ...data,
+      ...ruralPropertyData,
     });
 
     this.ormRepository.push(ruralProperty);

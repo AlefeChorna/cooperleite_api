@@ -61,6 +61,9 @@ class UpdateRuralPropertyService {
     await this.cacheProvider.delete(
       `rural-properties-list:${operator.company_id}`
     );
+    await this.cacheProvider.delete(
+      `rural-property-show:${operator.company_id}:${updatedRuralProperty.id}`
+    );
 
     return updatedRuralProperty;
   }

@@ -1,10 +1,11 @@
 import { Request, Response } from 'express';
 import { container } from 'tsyringe';
-import { classToClass, classToPlain } from 'class-transformer';
+import { classToClass } from 'class-transformer';
 
 import CreateRuralPropertyService from '@modules/rural-properties/services/CreateRuralPropertyService';
 import UpdateRuralPropertyService from '@modules/rural-properties/services/UpdateRuralPropertyService';
 import ListRuralPropertiesService from '@modules/rural-properties/services/ListRuralPropertiesService';
+import ShowRuralPropertyService from '@modules/rural-properties/services/ShowRuralPropertyService';
 
 export default class RuralPropertiesController {
   public async index(request: Request, response: Response): Promise<Response> {
@@ -15,6 +16,18 @@ export default class RuralPropertiesController {
     });
 
     return response.json(ruralProperties);
+  }
+
+  public async show(request: Request, response: Response): Promise<Response> {
+    const { user } = request;
+    const { id } = request.params;
+    const showRuralPropertyService = container.resolve(ShowRuralPropertyService);
+    const ruralProperty = await showRuralPropertyService.execute({
+      operator_id: user.id,
+      rural_property_id: Number(id),
+    });
+
+    return response.json({ ...classToClass(ruralProperty) });
   }
 
   public async create(request: Request, response: Response): Promise<Response> {

@@ -8,10 +8,11 @@ import IUsersRepository from '@modules/users/repositories/IUsersRepository';
 
 interface IRequest {
   operator_id: string;
+  rural_property_id: number;
 }
 
 @injectable()
-class ListRuralPropertiesService {
+class ShowRuralPropertyService {
   private ruralPropertiesRepository: IRuralPropertiesRepository;
 
   private usersRepository: IUsersRepository;
@@ -33,36 +34,39 @@ class ListRuralPropertiesService {
     this.cacheProvider = cacheProvider;
   }
 
-  public async execute(
-    { operator_id }: IRequest
-  ): Promise<IRuralPropertyModel[] | []> {
+  public async execute({
+    operator_id,
+    rural_property_id
+  }: IRequest): Promise<IRuralPropertyModel | undefined> {
     const operator = await this.usersRepository.findById(operator_id);
 
     if (!operator) {
       throw new AppError('Operator not found', 422);
     }
 
-    let ruralProperties = await this.cacheProvider.recover<IRuralPropertyModel[]>(
-      `rural-properties-list:${operator.company_id}`
+    const ruralPropertyCacheKey =
+      `rural-property-show:${operator.company_id}:${rural_property_id}`;
+
+    let ruralProperty = await this.cacheProvider.recover<IRuralPropertyModel>(
+      ruralPropertyCacheKey
     );
 
-    if (!ruralProperties) {
-      ruralProperties = await this.ruralPropertiesRepository.findByCompanyId(
-        operator.company_id
-      );
+    if (!ruralProperty) {
+      ruralProperty = await this.ruralPropertiesRepository.findOne({
+        id: rural_property_id,
+        company_id: operator.company_id,
+      });
 
-      if (ruralProperties) {
+      if (ruralProperty) {
         await this.cacheProvider.save(
-          `rural-properties-list:${operator.company_id}`,
-          ruralProperties
+          ruralPropertyCacheKey,
+          ruralProperty
         );
       }
     }
 
-    if (!ruralProperties) return [];
-
-    return ruralProperties;
+    return ruralProperty;
   }
 }
 
-export default ListRuralPropertiesService;
+export default ShowRuralPropertyService;

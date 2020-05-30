@@ -107,6 +107,6 @@ describe('UpdateRuralPropertyService', () => {
       operator_id: ruralProperty.operator_id,
     });
 
-    expect(deleteCache).toHaveBeenCalled();
+    expect(deleteCache).toHaveBeenCalledTimes(2);
   });
 })
