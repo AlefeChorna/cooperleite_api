@@ -59,9 +59,7 @@ class ListRuralPropertiesService {
       }
     }
 
-    if (!ruralProperties) return [];
-
-    return ruralProperties;
+    return ruralProperties || [];
   }
 }
 

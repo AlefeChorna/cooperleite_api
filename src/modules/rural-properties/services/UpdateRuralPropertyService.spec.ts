@@ -34,7 +34,7 @@ describe('UpdateRuralPropertyService', () => {
   })
 
   it('should throw an error if the rural property is not found', async () => {
-    await mockUsersRepository.create({
+    const user = await mockUsersRepository.create({
       name: 'Juca Bala',
       email: 'juca@gmail.com',
       password: '123456',
@@ -46,7 +46,7 @@ describe('UpdateRuralPropertyService', () => {
         name: 'Interior of Rio de Janeiro',
         city: 'Niterói',
         state: 'Rio de janeiro',
-        operator_id: 'non-existing-operator',
+        operator_id: user.id,
       })
     ).rejects.toBeInstanceOf(AppError);
   })
