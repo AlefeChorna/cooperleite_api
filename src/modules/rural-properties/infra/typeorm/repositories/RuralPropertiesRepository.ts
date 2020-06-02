@@ -1,8 +1,10 @@
 import { getRepository, Repository } from 'typeorm';
 
-import IRuralPropertiesRepository from '@modules/rural-properties/repositories/IRuralPropertiesRepository';
+import
+  IRuralPropertiesRepository, { IRuralPropertyParams }
+from '@modules/rural-properties/repositories/IRuralPropertiesRepository';
 import IRuralPropertyModel from '@modules/rural-properties/models/IRuralPropertyModel';
-import ICreateRuralProperty from '@modules/rural-properties/dtos/ICreateRuralProperty';
+import ICreateRuralPropertyDTO from '@modules/rural-properties/dtos/ICreateRuralPropertyDTO';
 import RuralProperties from '../entities/RuralProperties';
 
 class RuralPropertiesRepository implements IRuralPropertiesRepository {
@@ -13,7 +15,7 @@ class RuralPropertiesRepository implements IRuralPropertiesRepository {
   }
 
   public async findOne(
-    data: ICreateRuralProperty
+    data: IRuralPropertyParams
   ): Promise<IRuralPropertyModel | undefined> {
     const ruralProperty = await this.ormRepository.findOne(data);
 
@@ -34,7 +36,7 @@ class RuralPropertiesRepository implements IRuralPropertiesRepository {
     return ruralProperties;
   }
 
-  public async create(data: ICreateRuralProperty): Promise<IRuralPropertyModel> {
+  public async create(data: ICreateRuralPropertyDTO): Promise<IRuralPropertyModel> {
     const ruralProperty = this.ormRepository.create(data);
 
     await this.ormRepository.save(ruralProperty);

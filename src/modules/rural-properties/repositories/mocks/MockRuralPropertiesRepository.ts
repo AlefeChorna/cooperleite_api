@@ -1,6 +1,6 @@
 import IRuralPropertiesRepository from '../IRuralPropertiesRepository';
 import IRuralPropertyModel from '../../models/IRuralPropertyModel';
-import ICreateRuralProperty from '../../dtos/ICreateRuralProperty';
+import ICreateRuralPropertyDTO from '../../dtos/ICreateRuralPropertyDTO';
 import RuralProperties from '../../infra/typeorm/entities/RuralProperties';
 
 class MockRuralPropertiesRepository implements IRuralPropertiesRepository {
@@ -44,7 +44,7 @@ class MockRuralPropertiesRepository implements IRuralPropertiesRepository {
     return ruralProperties;
   }
 
-  public async create(ruralPropertyData: ICreateRuralProperty): Promise<IRuralPropertyModel> {
+  public async create(ruralPropertyData: ICreateRuralPropertyDTO): Promise<IRuralPropertyModel> {
     const ruralProperty = new RuralProperties();
 
     Object.assign(ruralProperty, {

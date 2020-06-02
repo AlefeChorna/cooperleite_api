@@ -1,4 +1,4 @@
-export default interface ICreateRuralProperty {
+export default interface ICreateRuralPropertyDTO {
   name: string;
   city: string;
   state: string;
