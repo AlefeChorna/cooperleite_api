@@ -1,8 +1,8 @@
 import { injectable, inject } from 'tsyringe';
 
 import AppError from '@shared/errors/AppError';
-import IRuralPropertyModel from '../models/IRuralPropertyModel';
-import IRuralPropertiesRepository from '../repositories/IRuralPropertiesRepository';
+import IVaccineModel from '../models/IVaccineModel';
+import IVaccinesRepository from '../repositories/IVaccinesRepository';
 import ICacheProvider from '@shared/container/providers/CacheProvider/models/ICacheProvider';
 import IUsersRepository from '@modules/users/repositories/IUsersRepository';
 
@@ -11,16 +11,16 @@ interface IRequest {
 }
 
 @injectable()
-class ListRuralPropertiesService {
-  private ruralPropertiesRepository: IRuralPropertiesRepository;
+class ListVaccinesService {
+  private vaccinesRepository: IVaccinesRepository;
 
   private usersRepository: IUsersRepository;
 
   private cacheProvider: ICacheProvider;
 
   constructor(
-    @inject('RuralPropertiesRepository')
-    ruralPropertiesRepository: IRuralPropertiesRepository,
+    @inject('VaccinesRepository')
+    vaccinesRepository: IVaccinesRepository,
 
     @inject('UsersRepository')
     usersRepository: IUsersRepository,
@@ -28,41 +28,41 @@ class ListRuralPropertiesService {
     @inject('CacheProvider')
     cacheProvider: ICacheProvider,
   ) {
-    this.ruralPropertiesRepository = ruralPropertiesRepository;
+    this.vaccinesRepository = vaccinesRepository;
     this.usersRepository = usersRepository;
     this.cacheProvider = cacheProvider;
   }
 
   public async execute(
     { operator_id }: IRequest
-  ): Promise<IRuralPropertyModel[] | []> {
+  ): Promise<IVaccineModel[] | []> {
     const operator = await this.usersRepository.findById(operator_id);
 
     if (!operator) {
       throw new AppError('Operator not found', 422);
     }
 
-    const ruralPropertiesCacheKey = `rural-properties-list:${operator.company_id}`;
+    const vaccinesCacheKey = `vaccines-list:${operator.company_id}`;
 
-    let ruralProperties = await this.cacheProvider.recover<IRuralPropertyModel[]>(
-      ruralPropertiesCacheKey
+    let vaccines = await this.cacheProvider.recover<IVaccineModel[]>(
+      vaccinesCacheKey
     );
 
-    if (!ruralProperties) {
-      ruralProperties = await this.ruralPropertiesRepository.findByCompanyId(
+    if (!vaccines) {
+      vaccines = await this.vaccinesRepository.findByCompanyId(
         operator.company_id
       );
 
-      if (ruralProperties) {
+      if (vaccines) {
         await this.cacheProvider.save(
-          ruralPropertiesCacheKey,
-          ruralProperties
+          vaccinesCacheKey,
+          vaccines
         );
       }
     }
 
-    return ruralProperties || [];
+    return vaccines || [];
   }
 }
 
-export default ListRuralPropertiesService;
+export default ListVaccinesService;
