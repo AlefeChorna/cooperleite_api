@@ -8,12 +8,14 @@ import IUsersRepository from '@modules/users/repositories/IUsersRepository';
 import IUserTokensRepository from '@modules/users/repositories/IUserTokensRepository';
 import INotificationsRepository from '@modules/notifications/repositories/INotificationsRepository';
 import IRuralPropertiesRepository from '@modules/rural-properties/repositories/IRuralPropertiesRepository';
+import IVaccinesRepository from '@modules/vaccines/repositories/IVaccinesRepository';
 
 import ExpensesRepository from '@modules/expenses/infra/typeorm/repositories/ExpensesRepository';
 import UsersRepository from '@modules/users/infra/typeorm/repositories/UsersRepository';
 import UserTokensRepository from '@modules/users/infra/typeorm/repositories/UserTokensRepository';
 import NotificationsRepository from '@modules/notifications/infra/typeorm/repositories/NotificationsRepository';
 import RuralPropertiesRepository from '@modules/rural-properties/infra/typeorm/repositories/RuralPropertiesRepository';
+import VaccinesRepository from '@modules/vaccines/infra/typeorm/repositories/VaccinesRepository';
 
 container.registerSingleton<IExpensesRepository>(
   'ExpensesRepository',
@@ -38,4 +40,9 @@ container.registerSingleton<INotificationsRepository>(
 container.registerSingleton<IRuralPropertiesRepository>(
   'RuralPropertiesRepository',
   RuralPropertiesRepository,
+);
+
+container.registerSingleton<IVaccinesRepository>(
+  'VaccinesRepository',
+  VaccinesRepository,
 );

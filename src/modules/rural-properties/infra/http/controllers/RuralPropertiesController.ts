@@ -45,14 +45,15 @@ export default class RuralPropertiesController {
   }
 
   public async update(request: Request, response: Response): Promise<Response> {
-    const { id, name, city, state, operator_id } = request.body;
+    const { user } = request;
+    const { id, name, city, state } = request.body;
     const updateRuralPropertyService = container.resolve(UpdateRuralPropertyService);
     const updatedRuralProperty = await updateRuralPropertyService.execute({
       id,
       name,
       city,
       state,
-      operator_id,
+      operator_id: user.id,
     });
 
     return response.json({ ...classToClass(updatedRuralProperty) });

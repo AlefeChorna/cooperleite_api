@@ -48,7 +48,6 @@ ruralPropertiesRouter.put(
       name: Joi.string().required(),
       city: Joi.string().required(),
       state: Joi.string().required(),
-      operator_id: Joi.string().required(),
     }
   }),
   ruralPropertiesController.update,
