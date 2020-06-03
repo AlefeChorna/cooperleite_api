@@ -1,7 +1,8 @@
 import { getRepository, Repository } from 'typeorm';
 
-import IVaccinesRepository, { IFindVaccineParams } from '@modules/vaccines/repositories/IVaccinesRepository';
+import IVaccinesRepository from '@modules/vaccines/repositories/IVaccinesRepository';
 import IVaccineModel from '@modules/vaccines/models/IVaccineModel';
+import IFindOneVaccineDTO from '@modules/vaccines/dtos/IFindOneVaccineDTO';
 import ICreateVaccineDTO from '@modules/vaccines/dtos/ICreateVaccineDTO';
 import Vaccine from '../entities/Vaccine';
 
@@ -13,7 +14,7 @@ class VaccinesRepository implements IVaccinesRepository {
   }
 
   public async findOne(
-    data: IFindVaccineParams
+    data: IFindOneVaccineDTO
   ): Promise<IVaccineModel | undefined> {
     const vaccine = await this.ormRepository.findOne(data);
 

@@ -1,12 +1,13 @@
-import IVaccinesRepository, { IFindVaccineParams } from '../IVaccinesRepository';
+import IVaccinesRepository from '../IVaccinesRepository';
 import IVaccineModel from '../../models/IVaccineModel';
+import IFindOneVaccineDTO from '../../dtos/IFindOneVaccineDTO';
 import ICreateVaccineDTO from '../../dtos/ICreateVaccineDTO';
 import Vaccine from '../../infra/typeorm/entities/Vaccine';
 
 class MockVaccinesRepository implements IVaccinesRepository {
   private ormRepository: IVaccineModel[] = [];
 
-  public async findOne(vaccineData: IFindVaccineParams): Promise<IVaccineModel | undefined> {
+  public async findOne(vaccineData: IFindOneVaccineDTO): Promise<IVaccineModel | undefined> {
     const vaccine = this.ormRepository.find((vaccine) => {
       let match = true;
 
