@@ -61,7 +61,7 @@ describe('ShowRuralPropertyService', () => {
     });
 
     const updatedRuralProperty = await showRuralPropertyService.execute({
-      operator_id: ruralProperty.operator_id,
+      operator_id: user.id,
       rural_property_id: ruralProperty.id,
     });
 
