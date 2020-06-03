@@ -1,9 +1,8 @@
 import { getRepository, Repository } from 'typeorm';
 
-import
-  IRuralPropertiesRepository, { IFindRuralPropertyParams }
-from '@modules/rural-properties/repositories/IRuralPropertiesRepository';
+import IRuralPropertiesRepository from '@modules/rural-properties/repositories/IRuralPropertiesRepository';
 import IRuralPropertyModel from '@modules/rural-properties/models/IRuralPropertyModel';
+import IFindOneRuralPropertyDTO from '@modules/rural-properties/dtos/IFindOneRuralPropertyDTO';
 import ICreateRuralPropertyDTO from '@modules/rural-properties/dtos/ICreateRuralPropertyDTO';
 import RuralProperties from '../entities/RuralProperties';
 
@@ -15,7 +14,7 @@ class RuralPropertiesRepository implements IRuralPropertiesRepository {
   }
 
   public async findOne(
-    data: IFindRuralPropertyParams
+    data: IFindOneRuralPropertyDTO
   ): Promise<IRuralPropertyModel | undefined> {
     const ruralProperty = await this.ormRepository.findOne(data);
 

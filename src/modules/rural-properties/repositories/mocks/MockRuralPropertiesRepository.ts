@@ -1,12 +1,15 @@
 import IRuralPropertiesRepository from '../IRuralPropertiesRepository';
 import IRuralPropertyModel from '../../models/IRuralPropertyModel';
+import IFindOneRuralPropertyDTO from '../../dtos/IFindOneRuralPropertyDTO';
 import ICreateRuralPropertyDTO from '../../dtos/ICreateRuralPropertyDTO';
 import RuralProperties from '../../infra/typeorm/entities/RuralProperties';
 
 class MockRuralPropertiesRepository implements IRuralPropertiesRepository {
   private ormRepository: IRuralPropertyModel[] = [];
 
-  public async findOne(ruralPropertyData: IRuralPropertyModel): Promise<IRuralPropertyModel | undefined> {
+  public async findOne(
+    ruralPropertyData: IFindOneRuralPropertyDTO
+  ): Promise<IRuralPropertyModel | undefined> {
     const ruralProperty = this.ormRepository.find((ruralProperty) => {
       let match = true;
 
