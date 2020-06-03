@@ -3,6 +3,12 @@
 // install dependencies
 yarn
 
+// if you don't have postgres installed, type the next command to install with docker:
+docker run --name postgres -e POSTGRES_PASSWORD=postgres -p 5433:5432 -d -t postgres:12
+
+// start postgres
+docker start postgres
+
 // run migrations (create da database before)
 yarn typeorm migration:run
 
