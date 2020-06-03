@@ -2,7 +2,7 @@ import IRuralPropertiesRepository from '../IRuralPropertiesRepository';
 import IRuralPropertyModel from '../../models/IRuralPropertyModel';
 import IFindOneRuralPropertyDTO from '../../dtos/IFindOneRuralPropertyDTO';
 import ICreateRuralPropertyDTO from '../../dtos/ICreateRuralPropertyDTO';
-import RuralProperties from '../../infra/typeorm/entities/RuralProperties';
+import RuralProperty from '../../infra/typeorm/entities/RuralProperty';
 
 class MockRuralPropertiesRepository implements IRuralPropertiesRepository {
   private ormRepository: IRuralPropertyModel[] = [];
@@ -48,7 +48,7 @@ class MockRuralPropertiesRepository implements IRuralPropertiesRepository {
   }
 
   public async create(ruralPropertyData: ICreateRuralPropertyDTO): Promise<IRuralPropertyModel> {
-    const ruralProperty = new RuralProperties();
+    const ruralProperty = new RuralProperty();
 
     Object.assign(ruralProperty, {
       id: Date.now(),

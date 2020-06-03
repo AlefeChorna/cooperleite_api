@@ -10,7 +10,7 @@ import {
 import IRuralPropertyModel from '@modules/rural-properties/models/IRuralPropertyModel';
 
 @Entity('rural_properties')
-class RuralProperties implements IRuralPropertyModel {
+class RuralProperty implements IRuralPropertyModel {
   @PrimaryGeneratedColumn('increment')
   id: number;
 
@@ -38,4 +38,4 @@ class RuralProperties implements IRuralPropertyModel {
   updated_at: string;
 }
 
-export default RuralProperties
+export default RuralProperty

@@ -4,13 +4,13 @@ import IRuralPropertiesRepository from '@modules/rural-properties/repositories/I
 import IRuralPropertyModel from '@modules/rural-properties/models/IRuralPropertyModel';
 import IFindOneRuralPropertyDTO from '@modules/rural-properties/dtos/IFindOneRuralPropertyDTO';
 import ICreateRuralPropertyDTO from '@modules/rural-properties/dtos/ICreateRuralPropertyDTO';
-import RuralProperties from '../entities/RuralProperties';
+import RuralProperty from '../entities/RuralProperty';
 
 class RuralPropertiesRepository implements IRuralPropertiesRepository {
-  private ormRepository: Repository<RuralProperties>;
+  private ormRepository: Repository<RuralProperty>;
 
   constructor() {
-    this.ormRepository = getRepository(RuralProperties);
+    this.ormRepository = getRepository(RuralProperty);
   }
 
   public async findOne(
