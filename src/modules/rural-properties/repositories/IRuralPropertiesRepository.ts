@@ -1,7 +1,7 @@
 import IRuralPropertyModel from '../models/IRuralPropertyModel';
 import ICreateRuralPropertyDTO from '../dtos/ICreateRuralPropertyDTO';
 
-export interface IRuralPropertyParams {
+export interface IFindRuralPropertyParams {
   id?: number;
   name?: string;
   city?: string;
@@ -13,7 +13,7 @@ export interface IRuralPropertyParams {
 }
 
 export default interface IRuralPropertiesRepository {
-  findOne(ruralProperty: IRuralPropertyParams): Promise<IRuralPropertyModel | undefined>;
+  findOne(ruralProperty: IFindRuralPropertyParams): Promise<IRuralPropertyModel | undefined>;
   findById(id: number): Promise<IRuralPropertyModel | undefined>;
   findByCompanyId(company_id: string): Promise<IRuralPropertyModel[] | undefined>;
   create(data: ICreateRuralPropertyDTO): Promise<IRuralPropertyModel>;

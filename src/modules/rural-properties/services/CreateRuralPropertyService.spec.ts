@@ -54,7 +54,7 @@ describe('CreateRuralPrepertyService', () => {
     expect(ruralProperty.company_id).toBe(user.company_id);
   })
 
-  it('should be able to delete rural property cache when a new record is created', async () => {
+  it('should be able to delete rural properties cache when a new record is created', async () => {
     const deleteCache = jest.spyOn(mockCacheProvider, 'delete');
 
     const user = await mockUsersRepository.create({

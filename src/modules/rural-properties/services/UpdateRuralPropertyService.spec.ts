@@ -51,7 +51,7 @@ describe('UpdateRuralPropertyService', () => {
     ).rejects.toBeInstanceOf(AppError);
   })
 
-  it('should be able to update a new rural property', async () => {
+  it('should be able to update a rural property', async () => {
     const user = await mockUsersRepository.create({
       name: 'Juca Bala',
       email: 'juca@gmail.com',
@@ -82,7 +82,7 @@ describe('UpdateRuralPropertyService', () => {
     expect(updatedRuralProperty.company_id).toBe(ruralProperty.company_id);
   })
 
-  it('should be able to delete rural property cache when a record is updated', async () => {
+  it('should be able to delete rural properties cache when a record is updated', async () => {
     const deleteCache = jest.spyOn(mockCacheProvider, 'delete');
 
     const user = await mockUsersRepository.create({
