@@ -2,7 +2,6 @@ import { Request, Response } from 'express';
 import { container } from 'tsyringe';
 import { classToClass } from 'class-transformer';
 
-
 import ListVaccinesService from '@modules/vaccines/services/ListVaccinesService';
 import ShowVaccineService from '@modules/vaccines/services/ShowVaccineService';
 import CreateVaccineService from '@modules/vaccines/services/CreateVaccineService';
