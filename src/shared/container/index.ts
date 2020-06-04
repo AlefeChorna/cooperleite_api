@@ -9,6 +9,7 @@ import IUserTokensRepository from '@modules/users/repositories/IUserTokensReposi
 import INotificationsRepository from '@modules/notifications/repositories/INotificationsRepository';
 import IRuralPropertiesRepository from '@modules/rural-properties/repositories/IRuralPropertiesRepository';
 import IVaccinesRepository from '@modules/vaccines/repositories/IVaccinesRepository';
+import IProductsReposity from '@modules/products/repositories/IProductsReposity';
 
 import ExpensesRepository from '@modules/expenses/infra/typeorm/repositories/ExpensesRepository';
 import UsersRepository from '@modules/users/infra/typeorm/repositories/UsersRepository';
@@ -16,6 +17,7 @@ import UserTokensRepository from '@modules/users/infra/typeorm/repositories/User
 import NotificationsRepository from '@modules/notifications/infra/typeorm/repositories/NotificationsRepository';
 import RuralPropertiesRepository from '@modules/rural-properties/infra/typeorm/repositories/RuralPropertiesRepository';
 import VaccinesRepository from '@modules/vaccines/infra/typeorm/repositories/VaccinesRepository';
+import ProductsRepository from '@modules/products/infra/typeorm/repositories/ProductsRepository';
 
 container.registerSingleton<IExpensesRepository>(
   'ExpensesRepository',
@@ -45,4 +47,9 @@ container.registerSingleton<IRuralPropertiesRepository>(
 container.registerSingleton<IVaccinesRepository>(
   'VaccinesRepository',
   VaccinesRepository,
+);
+
+container.registerSingleton<IProductsReposity>(
+  'ProductsRepository',
+  ProductsRepository,
 );
