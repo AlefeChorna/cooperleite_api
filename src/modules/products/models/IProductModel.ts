@@ -10,7 +10,7 @@ export default interface IProductModel {
   name: string;
   price: number;
   quantity: number;
-  unit_measurement: ICategories;
+  unit_measurement: string | ICategories;
   company_id: string;
   operator_id: string;
   created_at: string;

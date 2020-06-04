@@ -18,15 +18,15 @@ interface IRequest {
 
 @injectable()
 class CreateProductService {
-  private productsRepositories: IProductsReposity;
+  private productsRepository: IProductsReposity;
 
   private usersRepository: IUsersRepository;
 
   private cacheProvider: ICacheProvider;
 
   constructor(
-    @inject('ProductsRepositories')
-    productsRepositories: IProductsReposity,
+    @inject('ProductsRepository')
+    productsRepository: IProductsReposity,
 
     @inject('UsersRepository')
     usersRepository: IUsersRepository,
@@ -34,7 +34,7 @@ class CreateProductService {
     @inject('CacheProvider')
     cacheProvider: ICacheProvider,
   ) {
-    this.productsRepositories = productsRepositories;
+    this.productsRepository = productsRepository;
     this.usersRepository = usersRepository;
     this.cacheProvider = cacheProvider;
   }
@@ -56,7 +56,7 @@ class CreateProductService {
       throw new AppError('Product category not found', 422);
     }
 
-    const product = await this.productsRepositories.create({
+    const product = await this.productsRepository.create({
       name,
       price: formatToMoney(price),
       quantity,

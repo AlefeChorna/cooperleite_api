@@ -20,7 +20,7 @@ class ShowProductService {
   private cacheProvider: ICacheProvider;
 
   constructor(
-    @inject('ProductsReposity')
+    @inject('ProductsRepository')
     productsReposity: IProductsReposity,
 
     @inject('UsersRepository')

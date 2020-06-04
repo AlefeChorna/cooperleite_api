@@ -24,7 +24,7 @@ class Product implements IProductModel {
   quantity: number;
 
   @Column()
-  unit_measurement: ICategories;
+  unit_measurement: string;
 
   @Column()
   @Generated('uuid')
