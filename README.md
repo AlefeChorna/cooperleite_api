@@ -9,7 +9,7 @@ docker run --name postgres -e POSTGRES_PASSWORD=postgres -p 5433:5432 -d -t post
 // start postgres
 docker start postgres
 
-// run migrations (create da database before)
+// run migrations (create the database before)
 yarn typeorm migration:run
 
 // if you don't have mongodb installed, type the next command to install with docker:
