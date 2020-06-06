@@ -4,7 +4,7 @@ export default interface ICreateAnimalDTO {
   name: string;
   gender: string | IGender;
   breed?: string;
-  weight: number;
+  weight?: number;
   earring_number: number;
   lactating?: boolean;
   company_id: string;
