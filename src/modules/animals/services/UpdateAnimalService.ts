@@ -9,18 +9,19 @@ import IUsersRepository from '@modules/users/repositories/IUsersRepository';
 import genders from '@modules/animals/utils/genders';
 
 interface IRequest {
-  name: string;
-  gender: string | IGender;
+  id: number;
+  name?: string;
+  gender?: string | IGender;
   breed?: string;
   weight?: number;
-  earring_number: number;
+  earring_number?: number;
   lactating?: boolean;
   operator_id: string;
   date_birth?: string;
 }
 
 @injectable()
-class CreateAnimalService {
+class UpdateAnimalService {
   private animalsRepository: IAnimalsRepository;
 
   private usersRepository: IUsersRepository;
@@ -43,6 +44,7 @@ class CreateAnimalService {
   }
 
   public async execute({
+    id,
     name,
     earring_number,
     gender,
@@ -57,12 +59,20 @@ class CreateAnimalService {
       throw new AppError('Operator not found', 422);
     }
 
-    const genderExists = genders.hasOwnProperty(gender);
-    if (!genderExists) {
-      throw new AppError('Animal gender not found', 422);
+    const animal = await this.animalsRepository.findById(id);
+    if (!animal) {
+      throw new AppError('Animal not found', 422);
     }
 
-    if (gender === genders.M && lactating) {
+    if (gender) {
+      const genderExists = genders.hasOwnProperty(gender || '');
+      if (!genderExists) {
+        throw new AppError('Animal gender not found', 422);
+      }
+    }
+
+    const animalGender = gender || animal.gender;
+    if (animalGender === genders.M && lactating) {
       throw new AppError('Male animals do not go into lactose', 422);
     }
 
@@ -78,35 +88,22 @@ class CreateAnimalService {
       }
     }
 
-    const animalData = {
-      name,
-      gender,
-      earring_number,
-      lactating: !!lactating,
-      company_id: operator.company_id,
-      operator_id: operator.id
-    }
+    Object.assign(animal, {
+      name: name ?? animal.name,
+      gender: gender ?? animal.gender,
+      earring_number: earring_number ?? animal.earring_number,
+      breed: breed ?? animal.breed,
+      weight: weight ?? animal.weight,
+      lactating: lactating  ?? animal.lactating,
+      date_birth: date_birth ? parseISO(date_birth) : animal.lactating,
+    });
 
-    if (breed) {
-      Object.assign(animalData, { breed })
-    }
+    const updatedAnimal = await this.animalsRepository.create(animal);
 
-    if (weight) {
-      Object.assign(animalData, { weight })
-    }
+    await this.cacheProvider.delete(`animals-list:${operator.company_id}`);
 
-    if (date_birth) {
-      Object.assign(animalData, { date_birth: parseISO(date_birth) })
-    }
-
-    const animal = await this.animalsRepository.create(animalData);
-
-    await this.cacheProvider.delete(
-      `animals-list:${operator.company_id}`
-    );
-
-    return animal;
+    return updatedAnimal;
   }
 }
 
-export default CreateAnimalService;
+export default UpdateAnimalService;

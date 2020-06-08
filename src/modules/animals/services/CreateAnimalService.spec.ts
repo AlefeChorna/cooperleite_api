@@ -29,7 +29,6 @@ describe('CreateAnimalService', () => {
         name: 'Mimosa',
         gender: 'M',
         earring_number: 1,
-        company_id: 'non-existing-company',
         operator_id: 'non-existing-operator',
       })
     ).rejects.toBeInstanceOf(AppError);
@@ -47,7 +46,6 @@ describe('CreateAnimalService', () => {
         name: 'Mimosa',
         gender: 'Ms',
         earring_number: 1,
-        company_id: user.company_id,
         operator_id: user.id,
       })
     ).rejects.toBeInstanceOf(AppError);
@@ -66,7 +64,6 @@ describe('CreateAnimalService', () => {
         gender: 'M',
         lactating: true,
         earring_number: 1,
-        company_id: user.company_id,
         operator_id: user.id,
       })
     ).rejects.toBeInstanceOf(AppError);
@@ -85,7 +82,6 @@ describe('CreateAnimalService', () => {
         gender: 'M',
         date_birth: 'invalid-date',
         earring_number: 1,
-        company_id: user.company_id,
         operator_id: user.id,
       })
     ).rejects.toBeInstanceOf(AppError);
@@ -104,7 +100,6 @@ describe('CreateAnimalService', () => {
       earring_number: 1,
       breed: 'Nelore',
       date_birth: '2013-10-10',
-      company_id: user.company_id,
       operator_id: user.id,
     });
 
@@ -133,7 +128,6 @@ describe('CreateAnimalService', () => {
       weight: 600,
       lactating: true,
       date_birth: '2010-01-01',
-      company_id: user.company_id,
       operator_id: user.id,
     });
 
@@ -162,7 +156,6 @@ describe('CreateAnimalService', () => {
       name: 'Mimosa',
       gender: 'M',
       earring_number: 1,
-      company_id: user.company_id,
       operator_id: user.id,
     });
 
