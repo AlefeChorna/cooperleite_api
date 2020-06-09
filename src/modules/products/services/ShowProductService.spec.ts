@@ -61,18 +61,18 @@ describe('ShowProductService', () => {
       company_id: user.company_id,
     });
 
-    const updatedProduct = await showProductService.execute({
+    const productFound = await showProductService.execute({
       operator_id: user.id,
       product_id: product.id,
     });
 
-    expect(updatedProduct?.id).toBe(product.id);
-    expect(updatedProduct?.name).toBe('Quirera 10KG');
-    expect(updatedProduct?.price).toBe(32.99);
-    expect(updatedProduct?.quantity).toBe(20.50);
-    expect(updatedProduct?.unit_measurement).toBe('KG');
-    expect(updatedProduct?.operator_id).toBe(product.operator_id);
-    expect(updatedProduct?.company_id).toBe(product.company_id);
+    expect(productFound?.id).toBe(product.id);
+    expect(productFound?.name).toBe('Quirera 10KG');
+    expect(productFound?.price).toBe(32.99);
+    expect(productFound?.quantity).toBe(20.50);
+    expect(productFound?.unit_measurement).toBe('KG');
+    expect(productFound?.operator_id).toBe(product.operator_id);
+    expect(productFound?.company_id).toBe(product.company_id);
   })
 
   it('should be able to recover the cache of product when the record is showed', async () => {

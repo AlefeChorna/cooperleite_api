@@ -60,17 +60,17 @@ describe('ShowRuralPropertyService', () => {
       company_id: user.company_id,
     });
 
-    const updatedRuralProperty = await showRuralPropertyService.execute({
+    const ruralPropertyFound = await showRuralPropertyService.execute({
       operator_id: user.id,
       rural_property_id: ruralProperty.id,
     });
 
-    expect(updatedRuralProperty?.id).toBe(ruralProperty.id);
-    expect(updatedRuralProperty?.name).toBe('Interior of Rio de Janeiro');
-    expect(updatedRuralProperty?.city).toBe('Niterói');
-    expect(updatedRuralProperty?.state).toBe('Rio de janeiro');
-    expect(updatedRuralProperty?.operator_id).toBe(ruralProperty.operator_id);
-    expect(updatedRuralProperty?.company_id).toBe(ruralProperty.company_id);
+    expect(ruralPropertyFound?.id).toBe(ruralProperty.id);
+    expect(ruralPropertyFound?.name).toBe('Interior of Rio de Janeiro');
+    expect(ruralPropertyFound?.city).toBe('Niterói');
+    expect(ruralPropertyFound?.state).toBe('Rio de janeiro');
+    expect(ruralPropertyFound?.operator_id).toBe(ruralProperty.operator_id);
+    expect(ruralPropertyFound?.company_id).toBe(ruralProperty.company_id);
   })
 
   it('should be able to recover the cache of rural property when the record is showed', async () => {
