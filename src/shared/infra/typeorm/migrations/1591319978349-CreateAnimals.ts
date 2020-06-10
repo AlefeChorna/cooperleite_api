@@ -24,8 +24,7 @@ export class CreateAnimals1591319978349 implements MigrationInterface {
           },
           {
             name: 'earring_number',
-            type: 'decimal',
-            isUnique: true,
+            type: 'decimal'
           },
           {
             name: 'breed',

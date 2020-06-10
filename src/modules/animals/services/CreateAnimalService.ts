@@ -78,6 +78,17 @@ class CreateAnimalService {
       }
     }
 
+    const earringNumberAlreadyInUse = await this.animalsRepository.findOne({
+      earring_number,
+      company_id: operator.company_id,
+    });
+    if (earringNumberAlreadyInUse) {
+      throw new AppError(
+        'Earring number is already in use',
+        422
+      );
+    }
+
     const animalData = {
       name,
       gender,

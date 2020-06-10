@@ -51,7 +51,7 @@ class MockRuralPropertiesRepository implements IRuralPropertiesRepository {
     const ruralProperty = new RuralProperty();
 
     Object.assign(ruralProperty, {
-      id: Date.now(),
+      id: Math.random(),
       ...ruralPropertyData,
     });
 

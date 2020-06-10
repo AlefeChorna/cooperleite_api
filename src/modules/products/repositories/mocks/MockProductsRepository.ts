@@ -51,7 +51,7 @@ class MockProductsRepository implements IProductsReposity {
     const product = new Product();
 
     Object.assign(product, {
-      id: Date.now(),
+      id: Math.random(),
       ...productsData,
     });
 

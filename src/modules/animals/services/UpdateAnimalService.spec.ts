@@ -126,6 +126,40 @@ describe('UpdateAnimalService', () => {
     ).rejects.toBeInstanceOf(AppError);
   })
 
+  it('should throw an error if earring number is already in use', async () => {
+    const user = await mockUsersRepository.create({
+      name: 'Juca Bala',
+      email: 'juca@gmail.com',
+      password: '123456',
+    });
+
+    await mockAnimalsRepository.create({
+      name: 'Tim',
+      gender: 'M',
+      earring_number: 1,
+      breed: 'Nelore',
+      company_id: user.company_id,
+      operator_id: user.id,
+    });
+
+    const animal = await mockAnimalsRepository.create({
+      name: 'Mimosa',
+      gender: 'F',
+      earring_number: 2,
+      breed: 'Braford',
+      company_id: user.company_id,
+      operator_id: user.id,
+    });
+
+    await expect(
+      updateAnimalService.execute({
+        id: animal.id,
+        earring_number: 1,
+        operator_id: user.id,
+      })
+    ).rejects.toBeInstanceOf(AppError);
+  })
+
   it('should be able to update a male animal', async () => {
     const user = await mockUsersRepository.create({
       name: 'Juca Bala',

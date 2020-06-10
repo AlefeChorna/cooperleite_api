@@ -88,6 +88,21 @@ class UpdateAnimalService {
       }
     }
 
+    if (earring_number !== animal.earring_number) {
+      const earringNumberAlreadyInUse = await this.animalsRepository.findOne({
+        earring_number,
+        company_id: operator.company_id,
+      });
+
+      if (earringNumberAlreadyInUse) {
+        throw new AppError(
+          'Earring number is already in use',
+          422
+        );
+      }
+    }
+
+
     Object.assign(animal, {
       name: name ?? animal.name,
       gender: gender ?? animal.gender,

@@ -49,7 +49,7 @@ class MockVaccinesRepository implements IVaccinesRepository {
     const vaccine = new Vaccine();
 
     Object.assign(vaccine, {
-      id: Date.now(),
+      id: Math.random(),
       ...vaccineData,
     });
 

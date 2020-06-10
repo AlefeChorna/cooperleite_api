@@ -51,7 +51,7 @@ class MockAnimalsRepository implements IAnimalsRepository {
     const animal = new Animal();
 
     Object.assign(animal, {
-      id: Date.now(),
+      id: Math.random(),
       ...animalData,
     });
 
