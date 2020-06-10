@@ -95,7 +95,7 @@ class UpdateAnimalService {
       breed: breed ?? animal.breed,
       weight: weight ?? animal.weight,
       lactating: lactating  ?? animal.lactating,
-      date_birth: date_birth ? parseISO(date_birth) : animal.lactating,
+      date_birth: date_birth ? parseISO(date_birth) : animal.date_birth,
     });
 
     const updatedAnimal = await this.animalsRepository.create(animal);
