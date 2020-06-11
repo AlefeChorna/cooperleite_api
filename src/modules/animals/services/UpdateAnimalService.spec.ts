@@ -263,6 +263,6 @@ describe('UpdateAnimalService', () => {
       operator_id: user.id,
     });
 
-    expect(deleteCache).toHaveBeenCalled();
+    expect(deleteCache).toHaveBeenCalledTimes(2);
   })
 })

@@ -116,6 +116,9 @@ class UpdateAnimalService {
     const updatedAnimal = await this.animalsRepository.create(animal);
 
     await this.cacheProvider.delete(`animals-list:${operator.company_id}`);
+    await this.cacheProvider.delete(
+      `animal-show:${operator.company_id}:${updatedAnimal.id}`
+    );
 
     return updatedAnimal;
   }

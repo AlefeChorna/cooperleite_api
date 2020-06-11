@@ -8,6 +8,7 @@ import {
 } from 'typeorm';
 
 import IAnimalModel from '@modules/animals/models/IAnimalModel';
+import ColumnNumericTransformer from '@shared/utils/number/ColumnNumericTransformer';
 
 @Entity('animals')
 class Animal implements IAnimalModel {
@@ -26,7 +27,7 @@ class Animal implements IAnimalModel {
   @Column()
   weight: number;
 
-  @Column()
+  @Column('integer', { transformer: new ColumnNumericTransformer() })
   earring_number: number;
 
   @Column()
@@ -40,7 +41,7 @@ class Animal implements IAnimalModel {
   @Generated('uuid')
   operator_id: string;
 
-  @Column()
+  @CreateDateColumn()
   date_birth: string;
 
   @CreateDateColumn()

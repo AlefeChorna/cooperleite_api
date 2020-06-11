@@ -44,7 +44,8 @@ class ShowVaccineService {
       throw new AppError('Operator not found', 422);
     }
 
-    const vaccineCacheKey = `vaccine-show:${operator.company_id}:1`;
+    const vaccineCacheKey =
+      `vaccine-show:${operator.company_id}:${vaccine_id}`;
 
     let vaccine = await this.cacheProvider.recover<IVaccineModel>(
       vaccineCacheKey
