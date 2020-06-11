@@ -1,5 +1,5 @@
 import { injectable, inject } from 'tsyringe';
-import { isValid, parseISO } from 'date-fns';
+import { isValid } from 'date-fns';
 
 import AppError from '@shared/errors/AppError';
 import IAnimalModel, { IGender } from '../models/IAnimalModel';
@@ -16,7 +16,7 @@ interface IRequest {
   earring_number: number;
   lactating?: boolean;
   operator_id: string;
-  date_birth?: string;
+  date_birth?: Date;
 }
 
 @injectable()
@@ -67,8 +67,7 @@ class CreateAnimalService {
     }
 
     if (date_birth) {
-      const parsedDateBirth = parseISO(date_birth);
-      const invalidDateBirth = date_birth && !isValid(parsedDateBirth);
+      const invalidDateBirth = !isValid(date_birth);
 
       if (invalidDateBirth) {
         throw new AppError(
@@ -107,7 +106,7 @@ class CreateAnimalService {
     }
 
     if (date_birth) {
-      Object.assign(animalData, { date_birth: parseISO(date_birth) })
+      Object.assign(animalData, { date_birth: date_birth })
     }
 
     const animal = await this.animalsRepository.create(animalData);

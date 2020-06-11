@@ -9,5 +9,5 @@ export default interface ICreateAnimalDTO {
   lactating?: boolean;
   company_id: string;
   operator_id: string;
-  date_birth?: string;
+  date_birth?: Date;
 }

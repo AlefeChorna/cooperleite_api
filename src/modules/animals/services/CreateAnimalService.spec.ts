@@ -80,7 +80,7 @@ describe('CreateAnimalService', () => {
       createVaccineService.execute({
         name: 'Mimosa',
         gender: 'M',
-        date_birth: 'invalid-date',
+        date_birth: parseISO('invalid-date'),
         earring_number: 1,
         operator_id: user.id,
       })
@@ -99,7 +99,7 @@ describe('CreateAnimalService', () => {
       gender: 'M',
       earring_number: 1,
       breed: 'Nelore',
-      date_birth: '2013-10-10',
+      date_birth: parseISO('2013-10-10'),
       operator_id: user.id,
     });
 
@@ -125,7 +125,7 @@ describe('CreateAnimalService', () => {
       gender: 'M',
       earring_number: 1,
       breed: 'Nelore',
-      date_birth: '2013-10-10',
+      date_birth: parseISO('2013-10-10'),
       operator_id: user.id,
     });
 
@@ -153,7 +153,7 @@ describe('CreateAnimalService', () => {
       breed: 'Braford',
       weight: 600,
       lactating: true,
-      date_birth: '2010-01-01',
+      date_birth: parseISO('2010-01-01'),
       operator_id: user.id,
     });
 

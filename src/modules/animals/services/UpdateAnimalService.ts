@@ -17,7 +17,7 @@ interface IRequest {
   earring_number?: number;
   lactating?: boolean;
   operator_id: string;
-  date_birth?: string;
+  date_birth?: Date;
 }
 
 @injectable()
@@ -77,8 +77,7 @@ class UpdateAnimalService {
     }
 
     if (date_birth) {
-      const parsedDateBirth = parseISO(date_birth);
-      const invalidDateBirth = date_birth && !isValid(parsedDateBirth);
+      const invalidDateBirth = !isValid(date_birth);
 
       if (invalidDateBirth) {
         throw new AppError(
@@ -110,10 +109,10 @@ class UpdateAnimalService {
       breed: breed ?? animal.breed,
       weight: weight ?? animal.weight,
       lactating: lactating  ?? animal.lactating,
-      date_birth: date_birth ? parseISO(date_birth) : animal.date_birth,
+      date_birth: date_birth ?? parseISO(animal.date_birth),
     });
 
-    const updatedAnimal = await this.animalsRepository.create(animal);
+    const updatedAnimal = await this.animalsRepository.save(animal);
 
     await this.cacheProvider.delete(`animals-list:${operator.company_id}`);
     await this.cacheProvider.delete(

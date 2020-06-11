@@ -120,7 +120,7 @@ describe('UpdateAnimalService', () => {
     await expect(
       updateAnimalService.execute({
         id: animal.id,
-        date_birth: 'invalid-date',
+        date_birth: parseISO('invalid-date'),
         operator_id: user.id,
       })
     ).rejects.toBeInstanceOf(AppError);
@@ -181,7 +181,7 @@ describe('UpdateAnimalService', () => {
       gender: 'M',
       earring_number: 1,
       breed: 'Nelore',
-      date_birth: '2013-10-10',
+      date_birth: parseISO('2013-10-10'),
       operator_id: user.id,
     });
 
@@ -209,7 +209,7 @@ describe('UpdateAnimalService', () => {
       breed: 'Braford',
       weight: 600,
       lactating: true,
-      date_birth: '2010-01-01',
+      date_birth: parseISO('2010-01-01'),
       company_id: user.company_id,
       operator_id: user.id,
     });
@@ -222,7 +222,7 @@ describe('UpdateAnimalService', () => {
       breed: 'Nelore',
       weight: 700,
       lactating: true,
-      date_birth: '2013-01-01',
+      date_birth: parseISO('2013-01-01'),
       operator_id: user.id,
     });
 

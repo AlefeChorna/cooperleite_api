@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { container } from 'tsyringe';
 import { classToClass } from 'class-transformer';
+import { parseISO } from 'date-fns';
 
 import ListAnimalsService from '@modules/animals/services/ListAnimalsService';
 import ShowAnimalService from '@modules/animals/services/ShowAnimalService';
@@ -49,7 +50,7 @@ export default class AnimalsController {
       breed,
       weight,
       lactating,
-      date_birth,
+      date_birth : date_birth ? parseISO(date_birth) : undefined,
       operator_id: user.id,
     });
 
@@ -77,7 +78,7 @@ export default class AnimalsController {
       breed,
       weight,
       lactating,
-      date_birth,
+      date_birth : date_birth ? parseISO(date_birth) : undefined,
       operator_id: user.id,
     });
 
