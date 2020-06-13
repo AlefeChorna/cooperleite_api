@@ -68,6 +68,7 @@ export default class AnimalsController {
       weight,
       lactating,
       date_birth,
+      animal_vaccines
     } = request.body;
     const updateAnimalService = container.resolve(UpdateAnimalService);
     const updatedAnimal = await updateAnimalService.execute({
@@ -80,6 +81,7 @@ export default class AnimalsController {
       lactating,
       date_birth : date_birth ? parseISO(date_birth) : undefined,
       operator_id: user.id,
+      animal_vaccines,
     });
 
     return response.json({ ...classToClass(updatedAnimal) });

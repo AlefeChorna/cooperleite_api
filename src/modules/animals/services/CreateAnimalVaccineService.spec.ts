@@ -116,7 +116,7 @@ describe('CreateAnimalVaccineService', () => {
       gender: 'M',
       earring_number: 1,
       breed: 'Nelore',
-      date_birth: '2013-10-10',
+      date_birth: parseISO('2013-10-10'),
       operator_id: user.id,
       company_id: user.company_id,
     });

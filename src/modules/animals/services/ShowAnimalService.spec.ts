@@ -1,3 +1,5 @@
+import { parseISO } from 'date-fns';
+
 import MockAnimalsRepository from '../repositories/mocks/MockAnimalsRepository';
 import ShowAnimalService from './ShowAnimalService';
 import MockUsersRepository from '@modules/users/repositories/mocks/MockUsersRepository';
@@ -57,7 +59,7 @@ describe('ShowAnimalService', () => {
       gender: 'M',
       earring_number: 1,
       breed: 'Nelore',
-      date_birth: '2013-10-10',
+      date_birth: parseISO('2013-10-10'),
       company_id: user.company_id,
       operator_id: user.id,
     });
@@ -72,7 +74,8 @@ describe('ShowAnimalService', () => {
     expect(animalFound?.gender).toBe('M');
     expect(animalFound?.earring_number).toBe(1);
     expect(animalFound?.breed).toBe('Nelore');
-    expect(animalFound?.date_birth).toStrictEqual('2013-10-10');
+    expect(animalFound?.animal_vaccines).toStrictEqual([]);
+    expect(animalFound?.date_birth).toStrictEqual(parseISO('2013-10-10'));
     expect(animalFound?.operator_id).toBe(user.id);
     expect(animalFound?.company_id).toBe(user.company_id);
   })
@@ -114,7 +117,7 @@ describe('ShowAnimalService', () => {
       gender: 'M',
       earring_number: 1,
       breed: 'Nelore',
-      date_birth: '2013-10-10',
+      date_birth: parseISO('2013-10-10'),
       company_id: user.company_id,
       operator_id: user.id,
     });

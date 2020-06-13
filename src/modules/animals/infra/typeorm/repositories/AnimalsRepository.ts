@@ -22,7 +22,10 @@ class AnimalsRepository implements IAnimalsRepository {
   }
 
   public async findById(id: number): Promise<IAnimalModel | undefined> {
-    const product = await this.ormRepository.findOne(id);
+    const product = await this.ormRepository.findOne({
+      where: { id },
+      relations: ['animal_vaccines']
+    });
 
     return product;
   }
@@ -30,7 +33,10 @@ class AnimalsRepository implements IAnimalsRepository {
   public async findByCompanyId(
     company_id: string
   ): Promise<IAnimalModel[] | undefined> {
-    const products = await this.ormRepository.find({ company_id });
+    const products = await this.ormRepository.find({
+      where: { company_id },
+      relations: ['animal_vaccines']
+    });
 
     return products;
   }

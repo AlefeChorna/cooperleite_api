@@ -1,3 +1,5 @@
+import IAnimalVaccineModel from './IAnimalVaccineModel';
+
 export type IGender = 'M' | 'F';
 
 export default interface IAnimalModel {
@@ -10,6 +12,7 @@ export default interface IAnimalModel {
   lactating: boolean;
   company_id: string;
   operator_id: string;
+  animal_vaccines: IAnimalVaccineModel[];
   date_birth: string;
   created_at: string;
   updated_at: string;

@@ -1,8 +1,14 @@
+import 'reflect-metadata';
 import { parseISO } from 'date-fns';
 
+import { container } from 'tsyringe';
+
 import MockAnimalsRepository from '../repositories/mocks/MockAnimalsRepository';
+import MockAnimalVaccinesRepository from '../repositories/mocks/MockAnimalVaccinesRepository';
 import UpdateAnimalService from './UpdateAnimalService';
+import CreateAnimalVaccineService from './CreateAnimalVaccineService';
 import MockUsersRepository from '@modules/users/repositories/mocks/MockUsersRepository';
+import MockVaccinesRepository from '@modules/vaccines/repositories/mocks/MockVaccinesRepository';
 import MockCacheProvider from '@shared/container/providers/CacheProvider/mocks/MockCacheProvider';
 import AppError from '@shared/errors/AppError';
 
@@ -175,6 +181,22 @@ describe('UpdateAnimalService', () => {
       operator_id: user.id,
     });
 
+    const mockAnimalVaccinesRepository = new MockAnimalVaccinesRepository();
+    const mockVaccinesRepository = new MockVaccinesRepository();
+    jest.spyOn(container, 'resolve').mockReturnValue(
+      new CreateAnimalVaccineService(
+        mockAnimalVaccinesRepository,
+        mockUsersRepository,
+        mockVaccinesRepository,
+      )
+    );
+
+    const vaccine = await mockVaccinesRepository.create({
+      name: 'Aftosa',
+      company_id: user.company_id,
+      operator_id: user.id,
+    });
+
     const updatedAnimal = await updateAnimalService.execute({
       id: animal.id,
       name: 'Tim',
@@ -182,6 +204,11 @@ describe('UpdateAnimalService', () => {
       earring_number: 1,
       breed: 'Nelore',
       date_birth: parseISO('2013-10-10'),
+      animal_vaccines: [{
+        vaccine_id: vaccine.id,
+        applied_at: '2015-01-01',
+        lack_at: '2015-06-01',
+      }],
       operator_id: user.id,
     });
 
@@ -193,6 +220,22 @@ describe('UpdateAnimalService', () => {
     expect(updatedAnimal.date_birth).toStrictEqual(parseISO('2013-10-10'));
     expect(updatedAnimal.operator_id).toBe(user.id);
     expect(updatedAnimal.company_id).toBe(user.company_id);
+
+    const {
+      animal_id,
+      vaccine_id,
+      applied_at,
+      lack_at,
+      company_id,
+      operator_id,
+    } = updatedAnimal.animal_vaccines[0];
+
+    expect(animal_id).toBe(updatedAnimal.id);
+    expect(vaccine_id).toBe(vaccine.id);
+    expect(applied_at).toStrictEqual(parseISO('2015-01-01'));
+    expect(lack_at).toStrictEqual(parseISO('2015-06-01'));
+    expect(company_id).toBe(user.company_id);
+    expect(operator_id).toBe(user.id);
   })
 
   it('should be able to update a feminine animal', async () => {
@@ -232,6 +275,7 @@ describe('UpdateAnimalService', () => {
     expect(updatedAnimal.earring_number).toBe(10);
     expect(updatedAnimal.breed).toBe('Nelore');
     expect(updatedAnimal.date_birth).toStrictEqual(parseISO('2013-01-01'));
+    expect(updatedAnimal.animal_vaccines).toStrictEqual([]);
     expect(updatedAnimal.lactating).toBe(true);
     expect(updatedAnimal.weight).toBe(700);
     expect(updatedAnimal.operator_id).toBe(user.id);

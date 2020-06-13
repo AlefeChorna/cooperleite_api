@@ -56,6 +56,11 @@ animalsRouter.put(
       weight: Joi.number(),
       lactating: Joi.boolean(),
       date_birth: Joi.string(),
+      animal_vaccines: Joi.array().items({
+        vaccine_id: Joi.number().required(),
+        applied_at: Joi.string().required(),
+        lack_at: Joi.string().required(),
+      }),
     }
   }),
   animalsController.update,

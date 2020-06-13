@@ -11,6 +11,7 @@ import IRuralPropertiesRepository from '@modules/rural-properties/repositories/I
 import IVaccinesRepository from '@modules/vaccines/repositories/IVaccinesRepository';
 import IProductsReposity from '@modules/products/repositories/IProductsReposity';
 import IAnimalsRepository from '@modules/animals/repositories/IAnimalsRepository';
+import IAnimalVaccinesRepository from '@modules/animals/repositories/IAnimalVaccinesRepository';
 
 import ExpensesRepository from '@modules/expenses/infra/typeorm/repositories/ExpensesRepository';
 import UsersRepository from '@modules/users/infra/typeorm/repositories/UsersRepository';
@@ -20,6 +21,7 @@ import RuralPropertiesRepository from '@modules/rural-properties/infra/typeorm/r
 import VaccinesRepository from '@modules/vaccines/infra/typeorm/repositories/VaccinesRepository';
 import ProductsRepository from '@modules/products/infra/typeorm/repositories/ProductsRepository';
 import AnimalsRepository from '@modules/animals/infra/typeorm/repositories/AnimalsRepository';
+import AnimalVaccinesRepository from '@modules/animals/infra/typeorm/repositories/AnimalVaccinesRepository';
 
 container.registerSingleton<IExpensesRepository>(
   'ExpensesRepository',
@@ -59,4 +61,9 @@ container.registerSingleton<IProductsReposity>(
 container.registerSingleton<IAnimalsRepository>(
   'AnimalsRepository',
   AnimalsRepository,
+);
+
+container.registerSingleton<IAnimalVaccinesRepository>(
+  'AnimalVaccinesRepository',
+  AnimalVaccinesRepository,
 );

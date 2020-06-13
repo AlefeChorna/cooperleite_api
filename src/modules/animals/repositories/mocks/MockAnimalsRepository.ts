@@ -52,6 +52,7 @@ class MockAnimalsRepository implements IAnimalsRepository {
 
     Object.assign(animal, {
       id: Math.random(),
+      animal_vaccines: [],
       ...animalData,
     });
 

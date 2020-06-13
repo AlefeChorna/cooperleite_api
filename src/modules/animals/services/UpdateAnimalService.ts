@@ -1,9 +1,10 @@
-import { injectable, inject } from 'tsyringe';
+import { injectable, inject, container } from 'tsyringe';
 import { isValid, parseISO } from 'date-fns';
 
 import AppError from '@shared/errors/AppError';
 import IAnimalModel, { IGender } from '../models/IAnimalModel';
 import IAnimalsRepository from '../repositories/IAnimalsRepository';
+import CreateAnimalVaccineService from './CreateAnimalVaccineService';
 import ICacheProvider from '@shared/container/providers/CacheProvider/models/ICacheProvider';
 import IUsersRepository from '@modules/users/repositories/IUsersRepository';
 import genders from '@modules/animals/utils/genders';
@@ -18,6 +19,11 @@ interface IRequest {
   lactating?: boolean;
   operator_id: string;
   date_birth?: Date;
+  animal_vaccines?: {
+    vaccine_id: number;
+    applied_at: string;
+    lack_at: string;
+  }[]
 }
 
 @injectable()
@@ -52,7 +58,8 @@ class UpdateAnimalService {
     breed,
     weight,
     lactating,
-    date_birth
+    date_birth,
+    animal_vaccines
   }: IRequest): Promise<IAnimalModel> {
     const operator = await this.usersRepository.findById(operator_id);
     if (!operator) {
@@ -118,6 +125,21 @@ class UpdateAnimalService {
     await this.cacheProvider.delete(
       `animal-show:${operator.company_id}:${updatedAnimal.id}`
     );
+
+    if (animal_vaccines) {
+      const createAnimalVaccineService = container.resolve(CreateAnimalVaccineService);
+
+      for (const animal_vaccine of animal_vaccines) {
+        const createdAnimalVaccine = await createAnimalVaccineService.execute({
+          vaccine_id: animal_vaccine.vaccine_id,
+          animal_id: updatedAnimal.id,
+          applied_at: parseISO(animal_vaccine.applied_at),
+          lack_at: parseISO(animal_vaccine.lack_at),
+          operator_id: operator.id
+        });
+        updatedAnimal.animal_vaccines.push(createdAnimalVaccine);
+      }
+    }
 
     return updatedAnimal;
   }

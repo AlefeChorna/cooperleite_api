@@ -5,9 +5,12 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   Generated,
+  OneToMany,
+  JoinColumn
 } from 'typeorm';
 
 import IAnimalModel from '@modules/animals/models/IAnimalModel';
+import AnimalVaccine from './AnimalVaccine';
 import ColumnNumericTransformer from '@shared/utils/number/ColumnNumericTransformer';
 
 @Entity('animals')
@@ -49,6 +52,10 @@ class Animal implements IAnimalModel {
 
   @UpdateDateColumn()
   updated_at: string;
+
+  @OneToMany(() => AnimalVaccine, (animalVaccine) => animalVaccine.animal)
+  @JoinColumn({ name: 'id' })
+  animal_vaccines: AnimalVaccine[];
 }
 
 export default Animal

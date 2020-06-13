@@ -5,9 +5,12 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   Generated,
+  ManyToOne,
+  JoinColumn,
 } from 'typeorm';
 
 import IAnimalVaccineModel from '@modules/animals/models/IAnimalVaccineModel';
+import Animal from './Animal';
 
 @Entity('animal_vaccines')
 class AnimalVaccine implements IAnimalVaccineModel {
@@ -39,6 +42,10 @@ class AnimalVaccine implements IAnimalVaccineModel {
 
   @UpdateDateColumn()
   updated_at: string;
+
+  @ManyToOne(() => Animal)
+  @JoinColumn({ name: 'animal_id' })
+  animal: Animal;
 }
 
 export default AnimalVaccine
