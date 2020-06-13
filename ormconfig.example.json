@@ -7,6 +7,7 @@
     "username": "postgres",
     "password": "postgres",
     "database": "coorperleite",
+    "logging": true,
     "entities": [
       "./src/modules/**/infra/typeorm/entities/*.ts"
     ],
