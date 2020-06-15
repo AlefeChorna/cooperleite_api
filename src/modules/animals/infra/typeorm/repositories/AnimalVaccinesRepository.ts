@@ -5,7 +5,7 @@ import IAnimalVaccineModel from '@modules/animals/models/IAnimalVaccineModel';
 import ICreateAnimalVaccineDTO from '@modules/animals/dtos/ICreateAnimalVaccineDTO';
 import AnimalVaccine from '../entities/AnimalVaccine';
 
-class AnimalsRepository implements IAnimalVaccinesRepository {
+class AnimalVaccinesRepository implements IAnimalVaccinesRepository {
   private ormRepository: Repository<AnimalVaccine>;
 
   constructor() {
@@ -31,4 +31,4 @@ class AnimalsRepository implements IAnimalVaccinesRepository {
   }
 }
 
-export default AnimalsRepository
+export default AnimalVaccinesRepository
