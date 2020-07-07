@@ -7,16 +7,17 @@ import ListAnimalsService from '@modules/animals/services/ListAnimalsService';
 import ShowAnimalService from '@modules/animals/services/ShowAnimalService';
 import CreateAnimalService from '@modules/animals/services/CreateAnimalService';
 import UpdateAnimalService from '@modules/animals/services/UpdateAnimalService';
+import makePagination from '@shared/utils/makePagination';
 
 export default class AnimalsController {
   public async index(request: Request, response: Response): Promise<Response> {
-    const { user } = request;
+    const { user, queryParams } = request;
     const listAnimalsService = container.resolve(ListAnimalsService);
     const animals = await listAnimalsService.execute({
       operator_id: user.id,
     });
 
-    return response.json(animals);
+    return response.json(makePagination(animals, queryParams));
   }
 
   public async show(request: Request, response: Response): Promise<Response> {
