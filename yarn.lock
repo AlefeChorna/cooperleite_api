@@ -612,6 +612,11 @@
   dependencies:
     "@types/node" "*"
 
+"@types/hapi__joi@17.x.x":
+  version "17.1.4"
+  resolved "https://registry.yarnpkg.com/@types/hapi__joi/-/hapi__joi-17.1.4.tgz#e46cd1bd81d25cd45247d652dadb3666514d807c"
+  integrity sha512-gqY3TeTyZvnyNhM02HgyCIoGIWsTFMnuzMfnD8evTsr1KIfueGJaz+QC77j+dFvhZ5cJArUNjDRHUjPxNohzGA==
+
 "@types/hapi__joi@^17.1.0":
   version "17.1.0"
   resolved "https://registry.yarnpkg.com/@types/hapi__joi/-/hapi__joi-17.1.0.tgz#b5324c423a49697ea0926f19cc90c6f5cbb68391"
@@ -651,6 +656,11 @@
   dependencies:
     jest-diff "^25.2.1"
     pretty-format "^25.2.1"
+
+"@types/joi@^14.3.4":
+  version "14.3.4"
+  resolved "https://registry.yarnpkg.com/@types/joi/-/joi-14.3.4.tgz#eed1e14cbb07716079c814138831a520a725a1e0"
+  integrity sha512-1TQNDJvIKlgYXGNIABfgFp9y0FziDpuGrd799Q5RcnsDu+krD+eeW/0Fs5PHARvWWFelOhIG2OPCo6KbadBM4A==
 
 "@types/json-schema@^7.0.3":
   version "7.0.4"
@@ -1306,12 +1316,13 @@ caseless@~0.12.0:
   resolved "https://registry.yarnpkg.com/caseless/-/caseless-0.12.0.tgz#1b681c21ff84033c826543090689420d187151dc"
   integrity sha1-G2gcIf+EAzyCZUMJBolCDRhxUdw=
 
-celebrate@^12.1.1:
-  version "12.1.1"
-  resolved "https://registry.yarnpkg.com/celebrate/-/celebrate-12.1.1.tgz#73e4ef27ff44b3a6a68b5d779e6a801139a5ff15"
-  integrity sha512-d6A0KRX3sbGCbB/id6D4FAqGHwRfFb1B2e77pberUFF1awsF3P9RsLeeRYwbsrgA6Zj7J01SA07NgUyR6BeJVQ==
+celebrate@^12.1.2:
+  version "12.1.2"
+  resolved "https://registry.yarnpkg.com/celebrate/-/celebrate-12.1.2.tgz#1adf4ae2a2d6224fabc1d6779fa0fdd9632c047e"
+  integrity sha512-/Ajqg6lUBQxYHznFzLvF0Mk6AoMmFFoyIEJRje1ndkOEfhWTJmcZ9ocL9QNcoMpb+LBhFfPCTIMr/k+tsiHTDA==
   dependencies:
     "@hapi/joi" "17.x.x"
+    "@types/hapi__joi" "17.x.x"
     escape-html "1.0.3"
 
 chalk@^1.1.1:
@@ -3425,6 +3436,17 @@ jmespath@0.15.0:
   version "0.15.0"
   resolved "https://registry.yarnpkg.com/jmespath/-/jmespath-0.15.0.tgz#a3f222a9aae9f966f5d27c796510e28091764217"
   integrity sha1-o/Iiqarp+Wb10nx5ZRDigJF2Qhc=
+
+joi@^17.1.1:
+  version "17.1.1"
+  resolved "https://registry.yarnpkg.com/joi/-/joi-17.1.1.tgz#b7339e8a509510a04ce9cdeccb35a6e188080287"
+  integrity sha512-fww3Ae9cRyj6yHy90cpxvL2y39V5JCY2KaXV3KfALhoFfFcAuyQBPOq+2q6EZ2QNMn1FhkDy+eRkGVG7J+BvyA==
+  dependencies:
+    "@hapi/address" "^4.0.1"
+    "@hapi/formula" "^2.0.0"
+    "@hapi/hoek" "^9.0.0"
+    "@hapi/pinpoint" "^2.0.0"
+    "@hapi/topo" "^5.0.0"
 
 js-tokens@^4.0.0:
   version "4.0.0"

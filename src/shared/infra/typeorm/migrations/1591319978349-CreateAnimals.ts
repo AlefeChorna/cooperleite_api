@@ -29,10 +29,12 @@ export class CreateAnimals1591319978349 implements MigrationInterface {
           {
             name: 'breed',
             type: 'varchar',
+            isNullable: true,
           },
           {
             name: 'weight',
             type: 'decimal',
+            isNullable: true,
           },
           {
             name: 'gender',
