@@ -1,5 +1,4 @@
 import { Router } from 'express';
-import { celebrate, Segments, Joi as CJoi } from 'celebrate';
 import Joi from 'joi';
 
 import ensureAuthenticated from '@modules/users/infra/http/middlewares/ensureAuthenticated';
@@ -21,10 +20,10 @@ animalsRouter.get(
 animalsRouter.get(
   '/:id',
   ensureAuthenticated,
-  celebrate({
-    [Segments.PARAMS]: {
-      id: Joi.number().required(),
-    }
+  requestValidator({
+    params: Joi.object({
+      id: Joi.number().required().error(makeJoiErrorMessage()),
+    }),
   }),
   animalsController.show,
 );
@@ -47,14 +46,17 @@ animalsRouter.post(
 );
 
 animalsRouter.put(
-  '/',
+  '/:id',
   ensureAuthenticated,
   requestValidator({
+    params: Joi.object({
+      id: Joi.number().required().error(makeJoiErrorMessage()),
+    }),
     body: Joi.object({
       name: Joi.string().required().error(makeJoiErrorMessage()),
       earring_number: Joi.number().required().error(makeJoiErrorMessage()),
       gender: Joi.string().required().error(makeJoiErrorMessage()),
-      breed: Joi.string().allow(''),
+      breed: Joi.string().allow('', null),
       weight: Joi.number().allow('').error(makeJoiErrorMessage()),
       lactating: Joi.boolean(),
       date_birth: Joi.string(),
