@@ -11,15 +11,10 @@ const animalsController = new AnimalsController();
 
 animalsRouter.use(ensureAuthenticated);
 
-animalsRouter.get(
-  '/',
-  ensureAuthenticated,
-  animalsController.index,
-);
+animalsRouter.get('/', animalsController.index);
 
 animalsRouter.get(
   '/:id',
-  ensureAuthenticated,
   requestValidator({
     params: Joi.object({
       id: Joi.number().required().error(makeJoiErrorMessage()),
@@ -30,7 +25,6 @@ animalsRouter.get(
 
 animalsRouter.post(
   '/',
-  ensureAuthenticated,
   requestValidator({
     body: Joi.object({
       name: Joi.string().required().error(makeJoiErrorMessage()),
@@ -47,7 +41,6 @@ animalsRouter.post(
 
 animalsRouter.put(
   '/:id',
-  ensureAuthenticated,
   requestValidator({
     params: Joi.object({
       id: Joi.number().required().error(makeJoiErrorMessage()),

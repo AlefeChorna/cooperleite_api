@@ -59,9 +59,9 @@ export default class AnimalsController {
   }
 
   public async update(request: Request, response: Response): Promise<Response> {
+    const { id } = request.params;
     const { user } = request;
     const {
-      id,
       name,
       earring_number,
       gender,
