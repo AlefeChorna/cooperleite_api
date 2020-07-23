@@ -33,7 +33,7 @@ animalsRouter.post(
       breed: Joi.string().allow(''),
       weight: Joi.number().error(makeJoiErrorMessage()).allow(''),
       lactating: Joi.boolean(),
-      date_birth: Joi.date().iso(),
+      date_birth: Joi.date().iso().allow(''),
     })
   }),
   animalsController.create,
