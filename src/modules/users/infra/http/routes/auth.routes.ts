@@ -1,18 +1,20 @@
 import { Router } from 'express';
-import { celebrate, Segments, Joi } from 'celebrate';
+import Joi from 'joi';
 
 import AuthController from '../controllers/AuthController';
+import requestValidator from '@shared/infra/http/middlewares/requestValidator';
+import makeJoiErrorMessage from '@shared/utils/makeJoiErrorMessage';
 
 const authRouter = Router();
 const authController = new AuthController();
 
 authRouter.post(
   '/',
-  celebrate({
-    [Segments.BODY]: {
-      email: Joi.string().email().required(),
-      password: Joi.string().required(),
-    }
+  requestValidator({
+    body: Joi.object({
+      email: Joi.string().email().required().error(makeJoiErrorMessage()),
+      password: Joi.string().required().error(makeJoiErrorMessage()),
+    })
   }),
   authController.create
 );

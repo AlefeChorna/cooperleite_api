@@ -1,8 +1,10 @@
 import { Router } from 'express';
-import { celebrate, Segments, Joi } from 'celebrate';
+import Joi from 'joi';
 
 import ForgotPasswordController from '../controllers/ForgotPasswordController';
 import ResetPasswordController from '../controllers/ResetPasswordController';
+import requestValidator from '@shared/infra/http/middlewares/requestValidator';
+import makeJoiErrorMessage from '@shared/utils/makeJoiErrorMessage';
 
 const passwordRouter = Router();
 const forgotPasswordController = new ForgotPasswordController();
@@ -10,23 +12,23 @@ const resetPasswordController = new ResetPasswordController();
 
 passwordRouter.post(
   '/forgot',
-  celebrate({
-    [Segments.BODY]: {
-      email: Joi.string().email().required(),
-    }
+  requestValidator({
+    body: Joi.object({
+      email: Joi.string().email().required().error(makeJoiErrorMessage()),
+    })
   }),
   forgotPasswordController.create
 );
 passwordRouter.post(
   '/reset',
-  celebrate({
-    [Segments.BODY]: {
-      token: Joi.string().uuid().required(),
-      password: Joi.string().min(8).required(),
+  requestValidator({
+    body: Joi.object({
+      token: Joi.string().uuid().required().error(makeJoiErrorMessage()),
+      password: Joi.string().min(8).required().error(makeJoiErrorMessage()),
       password_confirmation: Joi.string().min(8).required().valid(
         Joi.ref('password')
-      ),
-    }
+      ).error(makeJoiErrorMessage()),
+    })
   }),
   resetPasswordController.create
 );

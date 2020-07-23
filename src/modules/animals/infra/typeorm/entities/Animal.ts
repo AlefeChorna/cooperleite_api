@@ -44,7 +44,7 @@ class Animal implements IAnimalModel {
   @Generated('uuid')
   operator_id: string;
 
-  @CreateDateColumn()
+  @Column('timestamp')
   date_birth: string;
 
   @CreateDateColumn()

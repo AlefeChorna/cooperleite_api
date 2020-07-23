@@ -1,9 +1,11 @@
+type Message = string | { [key: string]: string; };
+
 class AppError {
-  public readonly message: string;
+  public readonly message: Message;
 
   public readonly statusCode: number;
 
-  constructor(message: string, statsCode = 400) {
+  constructor(message: Message, statsCode = 400) {
     this.message = message;
     this.statusCode = statsCode;
   }

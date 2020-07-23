@@ -1,19 +1,21 @@
 import { Router } from 'express';
-import { celebrate, Segments, Joi } from 'celebrate';
+import Joi from 'joi';
 
 import UsersController from '../controllers/UsersController';
+import requestValidator from '@shared/infra/http/middlewares/requestValidator';
+import makeJoiErrorMessage from '@shared/utils/makeJoiErrorMessage';
 
 const usersRouter = Router();
 const usersController = new UsersController();
 
 usersRouter.post(
   '/',
-  celebrate({
-    [Segments.BODY]: {
-      name: Joi.string().min(4).required(),
-      email: Joi.string().email().required(),
-      password: Joi.string().min(8).required(),
-    }
+  requestValidator({
+    body: Joi.object({
+      name: Joi.string().required().error(makeJoiErrorMessage()),
+      email: Joi.string().email().required().error(makeJoiErrorMessage()),
+      password: Joi.string().min(8).required().error(makeJoiErrorMessage()),
+    })
   }),
   usersController.create
 );

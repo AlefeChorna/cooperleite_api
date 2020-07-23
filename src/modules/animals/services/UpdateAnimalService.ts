@@ -80,7 +80,10 @@ class UpdateAnimalService {
 
     const animalGender = gender || animal.gender;
     if (animalGender === genders.M && lactating) {
-      throw new AppError('Male animals do not go into lactose', 422);
+      throw new AppError(
+        { gender: 'Animal do sexo macho não pode estar em lactação' },
+        422
+      );
     }
 
     if (date_birth) {
@@ -94,7 +97,7 @@ class UpdateAnimalService {
       }
     }
 
-    if (earring_number !== animal.earring_number) {
+    if (Number(earring_number) !== animal.earring_number) {
       const earringNumberAlreadyInUse = await this.animalsRepository.findOne({
         earring_number,
         company_id: operator.company_id,
@@ -102,12 +105,11 @@ class UpdateAnimalService {
 
       if (earringNumberAlreadyInUse) {
         throw new AppError(
-          'Earring number is already in use',
+          { earring_number: 'Número do brinco já esta em uso' },
           422
         );
       }
     }
-
 
     Object.assign(animal, {
       name: name ?? animal.name,
@@ -116,7 +118,7 @@ class UpdateAnimalService {
       breed: breed ?? animal.breed,
       weight: weight ?? animal.weight,
       lactating: lactating  ?? animal.lactating,
-      date_birth: date_birth ?? parseISO(animal.date_birth),
+      date_birth: date_birth ?? animal.date_birth,
     });
 
     const updatedAnimal = await this.animalsRepository.save(animal);

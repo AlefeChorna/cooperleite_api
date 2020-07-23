@@ -33,7 +33,7 @@ animalsRouter.post(
       breed: Joi.string().allow(''),
       weight: Joi.number().error(makeJoiErrorMessage()).allow(''),
       lactating: Joi.boolean(),
-      date_birth: Joi.string(),
+      date_birth: Joi.date().iso(),
     })
   }),
   animalsController.create,
@@ -46,13 +46,13 @@ animalsRouter.put(
       id: Joi.number().required().error(makeJoiErrorMessage()),
     }),
     body: Joi.object({
-      name: Joi.string().required().error(makeJoiErrorMessage()),
-      earring_number: Joi.number().required().error(makeJoiErrorMessage()),
-      gender: Joi.string().required().error(makeJoiErrorMessage()),
+      name: Joi.string().error(makeJoiErrorMessage()),
+      earring_number: Joi.number().error(makeJoiErrorMessage()),
+      gender: Joi.string().error(makeJoiErrorMessage()),
       breed: Joi.string().allow('', null),
       weight: Joi.number().allow('').error(makeJoiErrorMessage()),
       lactating: Joi.boolean(),
-      date_birth: Joi.string(),
+      date_birth: Joi.date().iso().allow(''),
       animal_vaccines: Joi.array().items({
         vaccine_id: Joi.number().required(),
         applied_at: Joi.string().required(),

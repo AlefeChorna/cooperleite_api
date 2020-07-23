@@ -63,7 +63,10 @@ class CreateAnimalService {
     }
 
     if (gender === genders.M && lactating) {
-      throw new AppError('Male animals do not go into lactose', 422);
+      throw new AppError(
+        { gender: 'Animal do sexo macho não pode estar em lactação' },
+        422
+      );
     }
 
     if (date_birth) {
@@ -83,7 +86,7 @@ class CreateAnimalService {
     });
     if (earringNumberAlreadyInUse) {
       throw new AppError(
-        'Earring number is already in use',
+        { earring_number: 'Número do brinco já esta em uso' },
         422
       );
     }
@@ -106,7 +109,7 @@ class CreateAnimalService {
     }
 
     if (date_birth) {
-      Object.assign(animalData, { date_birth: date_birth })
+      Object.assign(animalData, { date_birth })
     }
 
     const animal = await this.animalsRepository.create(animalData);
