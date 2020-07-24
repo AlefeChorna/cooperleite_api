@@ -116,10 +116,13 @@ class UpdateAnimalService {
       gender: gender ?? animal.gender,
       earring_number: earring_number ?? animal.earring_number,
       breed: breed ?? animal.breed,
-      weight: weight ?? animal.weight,
-      lactating: lactating  ?? animal.lactating,
-      date_birth: date_birth ?? animal.date_birth,
+      lactating: lactating ?? animal.lactating,
+      weight: weight,
     });
+
+    if (date_birth === null || date_birth) {
+      Object.assign(animal, { date_birth });
+    }
 
     const updatedAnimal = await this.animalsRepository.save(animal);
 

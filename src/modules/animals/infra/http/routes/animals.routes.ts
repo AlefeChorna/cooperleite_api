@@ -33,7 +33,7 @@ animalsRouter.post(
       breed: Joi.string().allow(''),
       weight: Joi.number().error(makeJoiErrorMessage()).allow(''),
       lactating: Joi.boolean(),
-      date_birth: Joi.date().iso().allow(''),
+      date_birth: Joi.date().iso().allow('', null),
     })
   }),
   animalsController.create,
@@ -52,7 +52,7 @@ animalsRouter.put(
       breed: Joi.string().allow('', null),
       weight: Joi.number().allow('').error(makeJoiErrorMessage()),
       lactating: Joi.boolean(),
-      date_birth: Joi.date().iso().allow(''),
+      date_birth: Joi.date().iso().allow('', null),
       animal_vaccines: Joi.array().items({
         vaccine_id: Joi.number().required(),
         applied_at: Joi.string().required(),

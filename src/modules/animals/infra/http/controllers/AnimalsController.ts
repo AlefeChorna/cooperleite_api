@@ -78,9 +78,9 @@ export default class AnimalsController {
       earring_number,
       gender,
       breed,
-      weight,
+      weight: weight === '' ? null : weight,
       lactating,
-      date_birth : date_birth ? parseISO(date_birth) : undefined,
+      date_birth : date_birth ? parseISO(date_birth) : date_birth,
       operator_id: user.id,
       animal_vaccines,
     });
