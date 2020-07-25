@@ -56,7 +56,7 @@ class UpdateProfileService {
     );
 
     if (newUserEmailBelongsToAnotherUser) {
-      throw new AppError('E-mail already in use', 422);
+      throw new AppError({ email: 'E-mail já está em uso' }, 422);
     }
 
     if (new_password && !old_password) {
@@ -73,7 +73,7 @@ class UpdateProfileService {
       );
 
       if (!oldPasswordIsValid) {
-        throw new AppError('Old password does not match', 422);
+        throw new AppError({ old_password: 'Senha atual incorreta' }, 422);
       }
 
       Object.assign(user, {

@@ -46,7 +46,7 @@ animalsRouter.put(
       id: Joi.number().required().error(makeJoiErrorMessage()),
     }),
     body: Joi.object({
-      name: Joi.string().error(makeJoiErrorMessage()),
+      name: Joi.string().required().error(makeJoiErrorMessage()),
       earring_number: Joi.number().error(makeJoiErrorMessage()),
       gender: Joi.string().error(makeJoiErrorMessage()),
       breed: Joi.string().allow('', null),

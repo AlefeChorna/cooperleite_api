@@ -6,16 +6,17 @@ import ListVaccinesService from '@modules/vaccines/services/ListVaccinesService'
 import ShowVaccineService from '@modules/vaccines/services/ShowVaccineService';
 import CreateVaccineService from '@modules/vaccines/services/CreateVaccineService';
 import UpdateVaccineService from '@modules/vaccines/services/UpdateVaccineService';
+import makePagination from '@shared/utils/makePagination';
 
 export default class VaccinesController {
   public async index(request: Request, response: Response): Promise<Response> {
-    const { user } = request;
+    const { user, queryParams } = request;
     const listVaccinesService = container.resolve(ListVaccinesService);
     const vaccines = await listVaccinesService.execute({
       operator_id: user.id,
     });
 
-    return response.json(vaccines);
+    return response.json(makePagination(vaccines, queryParams));
   }
 
   public async show(request: Request, response: Response): Promise<Response> {
@@ -43,11 +44,12 @@ export default class VaccinesController {
   }
 
   public async update(request: Request, response: Response): Promise<Response> {
+    const { id } = request.params;
     const { user } = request;
-    const { id, name } = request.body;
+    const { name } = request.body;
     const updateVaccineService = container.resolve(UpdateVaccineService);
     const updatedVaccine = await updateVaccineService.execute({
-      id,
+      id: Number(id),
       name,
       operator_id: user.id,
     });

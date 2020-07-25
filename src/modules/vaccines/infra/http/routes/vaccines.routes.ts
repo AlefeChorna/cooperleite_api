@@ -1,8 +1,10 @@
 import { Router } from 'express';
-import { celebrate, Segments, Joi } from 'celebrate';
+import Joi from 'joi';
 
 import ensureAuthenticated from '@modules/users/infra/http/middlewares/ensureAuthenticated';
 import VaccinesController from '../controllers/VaccinesController';
+import requestValidator from '@shared/infra/http/middlewares/requestValidator';
+import makeJoiErrorMessage from '@shared/utils/makeJoiErrorMessage';
 
 const vaccinesRouter = Router();
 const vaccinesController = new VaccinesController();
@@ -18,10 +20,10 @@ vaccinesRouter.get(
 vaccinesRouter.get(
   '/:id',
   ensureAuthenticated,
-  celebrate({
-    [Segments.PARAMS]: {
-      id: Joi.number().required(),
-    }
+  requestValidator({
+    params: Joi.object({
+      id: Joi.number().required().error(makeJoiErrorMessage()),
+    }),
   }),
   vaccinesController.show,
 );
@@ -29,22 +31,24 @@ vaccinesRouter.get(
 vaccinesRouter.post(
   '/',
   ensureAuthenticated,
-  celebrate({
-    [Segments.BODY]: {
-      name: Joi.string().required(),
-    }
+  requestValidator({
+    body: Joi.object({
+      name: Joi.string().required().error(makeJoiErrorMessage()),
+    })
   }),
   vaccinesController.create,
 );
 
 vaccinesRouter.put(
-  '/',
+  '/:id',
   ensureAuthenticated,
-  celebrate({
-    [Segments.BODY]: {
-      id: Joi.number().required(),
-      name: Joi.string().required(),
-    }
+  requestValidator({
+    params: Joi.object({
+      id: Joi.number().required().error(makeJoiErrorMessage()),
+    }),
+    body: Joi.object({
+      name: Joi.string().required().error(makeJoiErrorMessage()),
+    })
   }),
   vaccinesController.update,
 );
